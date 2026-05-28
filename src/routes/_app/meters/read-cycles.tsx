@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Play, Plus } from "lucide-react";
 import { readCycles, formatNumber } from "@/mocks/data";
 import { toast } from "sonner";
+import { FormDialog } from "@/components/ui/form-dialog";
 
 export const Route = createFileRoute("/_app/meters/read-cycles")({ component: Page });
 
