@@ -5,6 +5,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
 import { Plus, Play } from "lucide-react";
 import { toast } from "sonner";
+import { FormDialog } from "@/components/ui/form-dialog";
 
 export const Route = createFileRoute("/_app/billing/schedules")({ component: Page });
 
@@ -33,7 +34,17 @@ function Page() {
   return (
     <>
       <PageHeader title="Billing Schedules" description="Automated invoice generation jobs" actions={
-        <Button size="sm" onClick={() => toast.success("Schedule created")}><Plus className="mr-1.5 h-4 w-4" /> New schedule</Button>
+        <FormDialog
+          trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> New schedule</Button>}
+          title="New billing schedule"
+          successMessage="Schedule created"
+          fields={[
+            { name: "name", label: "Schedule name", required: true, placeholder: "e.g. Monthly Residential" },
+            { name: "cycle", label: "Cycle", type: "select", required: true, options: ["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"] },
+            { name: "scope", label: "Scope", type: "select", required: true, options: ["All residential", "All commercial", "Industrial bulk", "All consumers"] },
+            { name: "startDate", label: "First run", type: "date", required: true },
+          ]}
+        />
       } />
       <DataTable data={data} columns={cols} rowKey={(r) => r.id} />
     </>

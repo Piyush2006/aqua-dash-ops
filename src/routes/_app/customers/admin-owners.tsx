@@ -5,7 +5,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { townships, formatNumber } from "@/mocks/data";
-import { toast } from "sonner";
+import { FormDialog } from "@/components/ui/form-dialog";
 
 export const Route = createFileRoute("/_app/customers/admin-owners")({ component: Page });
 
@@ -35,7 +35,18 @@ function Page() {
   return (
     <>
       <PageHeader title="Admin Owners" description="Township-level administrators and site managers" actions={
-        <Button size="sm" onClick={() => toast.success("Admin invite sent")}><Plus className="mr-1.5 h-4 w-4" /> Invite admin</Button>
+        <FormDialog
+          trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> Invite admin</Button>}
+          title="Invite township admin"
+          successMessage="Admin invite sent"
+          fields={[
+            { name: "name", label: "Full name", required: true },
+            { name: "email", label: "Email", type: "email", required: true },
+            { name: "township", label: "Township", type: "select", required: true, options: townships.map((t) => t.name) },
+            { name: "role", label: "Role", type: "select", required: true, options: ["Site Manager", "Operations Lead", "Billing Admin", "Read-only Viewer"] },
+            { name: "phone", label: "Mobile", placeholder: "+91 98XXXXXXXX" },
+          ]}
+        />
       } />
       <DataTable data={data} columns={cols} rowKey={(r) => r.id} searchKeys={["township", "manager"]} searchPlaceholder="Search admins..." />
     </>

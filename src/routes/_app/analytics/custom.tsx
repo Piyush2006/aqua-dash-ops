@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Button } from "@/components/ui/button";
 import { Plus, FileText, Download } from "lucide-react";
 import { toast } from "sonner";
+import { FormDialog } from "@/components/ui/form-dialog";
 
 export const Route = createFileRoute("/_app/analytics/custom")({ component: Page });
 
@@ -19,7 +20,17 @@ function Page() {
   return (
     <>
       <PageHeader title="Custom Reports" description="Build, schedule and distribute reports" actions={
-        <Button size="sm" onClick={() => toast.success("New report builder opened")}><Plus className="mr-1.5 h-4 w-4" /> New report</Button>
+        <FormDialog
+          trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> New report</Button>}
+          title="Build a new report"
+          successMessage="Report created"
+          fields={[
+            { name: "name", label: "Report name", required: true, placeholder: "e.g. Township Scorecard" },
+            { name: "schedule", label: "Schedule", type: "select", required: true, options: ["One-off", "Daily", "Weekly", "Monthly", "Quarterly"] },
+            { name: "format", label: "Format", type: "select", required: true, options: ["PDF", "XLSX", "CSV"] },
+            { name: "recipients", label: "Recipients (comma separated)", placeholder: "ops@…, ceo@…" },
+          ]}
+        />
       } />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {reports.map((r) => (
