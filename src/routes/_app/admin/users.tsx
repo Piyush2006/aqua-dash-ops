@@ -29,7 +29,7 @@ function Page() {
           fields={[
             { name: "name", label: "Full name", required: true },
             { name: "email", label: "Email", type: "email", required: true },
-            { name: "role", label: "Role", type: "select", required: true, options: roles.map((r) => r.name) },
+            { name: "role", label: "Role", type: "select", required: true, options: roles },
           ]}
         />
       } />
