@@ -16,14 +16,39 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppMetersIndexRouteImport } from './routes/_app/meters/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
 import { Route as AppCustomersIndexRouteImport } from './routes/_app/customers/index'
+import { Route as AppMetersReadExceptionsRouteImport } from './routes/_app/meters/read-exceptions'
+import { Route as AppMetersReadCyclesRouteImport } from './routes/_app/meters/read-cycles'
 import { Route as AppMetersHierarchyRouteImport } from './routes/_app/meters/hierarchy'
+import { Route as AppMetersHealthRouteImport } from './routes/_app/meters/health'
+import { Route as AppMetersAlertsRouteImport } from './routes/_app/meters/alerts'
 import { Route as AppMetersIdRouteImport } from './routes/_app/meters/$id'
 import { Route as AppDashboardMdmRouteImport } from './routes/_app/dashboard/mdm'
 import { Route as AppDashboardConsumerRouteImport } from './routes/_app/dashboard/consumer'
 import { Route as AppDashboardBillingRouteImport } from './routes/_app/dashboard/billing'
 import { Route as AppDashboardAlertsRouteImport } from './routes/_app/dashboard/alerts'
+import { Route as AppCustomersUtilityOwnersRouteImport } from './routes/_app/customers/utility-owners'
+import { Route as AppCustomersRequestsRouteImport } from './routes/_app/customers/requests'
 import { Route as AppCustomersNewRouteImport } from './routes/_app/customers/new'
+import { Route as AppCustomersConnectionsRouteImport } from './routes/_app/customers/connections'
+import { Route as AppCustomersAdminOwnersRouteImport } from './routes/_app/customers/admin-owners'
 import { Route as AppCustomersIdRouteImport } from './routes/_app/customers/$id'
+import { Route as AppBillingTariffsRouteImport } from './routes/_app/billing/tariffs'
+import { Route as AppBillingSchedulesRouteImport } from './routes/_app/billing/schedules'
+import { Route as AppBillingPaymentsRouteImport } from './routes/_app/billing/payments'
+import { Route as AppBillingCollectionsRouteImport } from './routes/_app/billing/collections'
+import { Route as AppBillingBillsRouteImport } from './routes/_app/billing/bills'
+import { Route as AppAnalyticsWaterLossRouteImport } from './routes/_app/analytics/water-loss'
+import { Route as AppAnalyticsRevenueRouteImport } from './routes/_app/analytics/revenue'
+import { Route as AppAnalyticsMetersRouteImport } from './routes/_app/analytics/meters'
+import { Route as AppAnalyticsCustomRouteImport } from './routes/_app/analytics/custom'
+import { Route as AppAnalyticsConsumptionRouteImport } from './routes/_app/analytics/consumption'
+import { Route as AppAnalyticsCollectionsRouteImport } from './routes/_app/analytics/collections'
+import { Route as AppAdminUsersRouteImport } from './routes/_app/admin/users'
+import { Route as AppAdminSettingsRouteImport } from './routes/_app/admin/settings'
+import { Route as AppAdminNotificationsRouteImport } from './routes/_app/admin/notifications'
+import { Route as AppAdminHolidaysRouteImport } from './routes/_app/admin/holidays'
+import { Route as AppAdminAuditLogsRouteImport } from './routes/_app/admin/audit-logs'
+import { Route as AppAdminApprovalsRouteImport } from './routes/_app/admin/approvals'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -59,9 +84,29 @@ const AppCustomersIndexRoute = AppCustomersIndexRouteImport.update({
   path: '/customers/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppMetersReadExceptionsRoute = AppMetersReadExceptionsRouteImport.update({
+  id: '/meters/read-exceptions',
+  path: '/meters/read-exceptions',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMetersReadCyclesRoute = AppMetersReadCyclesRouteImport.update({
+  id: '/meters/read-cycles',
+  path: '/meters/read-cycles',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppMetersHierarchyRoute = AppMetersHierarchyRouteImport.update({
   id: '/meters/hierarchy',
   path: '/meters/hierarchy',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMetersHealthRoute = AppMetersHealthRouteImport.update({
+  id: '/meters/health',
+  path: '/meters/health',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMetersAlertsRoute = AppMetersAlertsRouteImport.update({
+  id: '/meters/alerts',
+  path: '/meters/alerts',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMetersIdRoute = AppMetersIdRouteImport.update({
@@ -89,9 +134,30 @@ const AppDashboardAlertsRoute = AppDashboardAlertsRouteImport.update({
   path: '/dashboard/alerts',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCustomersUtilityOwnersRoute =
+  AppCustomersUtilityOwnersRouteImport.update({
+    id: '/customers/utility-owners',
+    path: '/customers/utility-owners',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppCustomersRequestsRoute = AppCustomersRequestsRouteImport.update({
+  id: '/customers/requests',
+  path: '/customers/requests',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCustomersNewRoute = AppCustomersNewRouteImport.update({
   id: '/customers/new',
   path: '/customers/new',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCustomersConnectionsRoute = AppCustomersConnectionsRouteImport.update({
+  id: '/customers/connections',
+  path: '/customers/connections',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCustomersAdminOwnersRoute = AppCustomersAdminOwnersRouteImport.update({
+  id: '/customers/admin-owners',
+  path: '/customers/admin-owners',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCustomersIdRoute = AppCustomersIdRouteImport.update({
@@ -99,19 +165,129 @@ const AppCustomersIdRoute = AppCustomersIdRouteImport.update({
   path: '/customers/$id',
   getParentRoute: () => AppRoute,
 } as any)
+const AppBillingTariffsRoute = AppBillingTariffsRouteImport.update({
+  id: '/billing/tariffs',
+  path: '/billing/tariffs',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingSchedulesRoute = AppBillingSchedulesRouteImport.update({
+  id: '/billing/schedules',
+  path: '/billing/schedules',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingPaymentsRoute = AppBillingPaymentsRouteImport.update({
+  id: '/billing/payments',
+  path: '/billing/payments',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingCollectionsRoute = AppBillingCollectionsRouteImport.update({
+  id: '/billing/collections',
+  path: '/billing/collections',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingBillsRoute = AppBillingBillsRouteImport.update({
+  id: '/billing/bills',
+  path: '/billing/bills',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsWaterLossRoute = AppAnalyticsWaterLossRouteImport.update({
+  id: '/analytics/water-loss',
+  path: '/analytics/water-loss',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsRevenueRoute = AppAnalyticsRevenueRouteImport.update({
+  id: '/analytics/revenue',
+  path: '/analytics/revenue',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsMetersRoute = AppAnalyticsMetersRouteImport.update({
+  id: '/analytics/meters',
+  path: '/analytics/meters',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsCustomRoute = AppAnalyticsCustomRouteImport.update({
+  id: '/analytics/custom',
+  path: '/analytics/custom',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsConsumptionRoute = AppAnalyticsConsumptionRouteImport.update({
+  id: '/analytics/consumption',
+  path: '/analytics/consumption',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsCollectionsRoute = AppAnalyticsCollectionsRouteImport.update({
+  id: '/analytics/collections',
+  path: '/analytics/collections',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminUsersRoute = AppAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminSettingsRoute = AppAdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminNotificationsRoute = AppAdminNotificationsRouteImport.update({
+  id: '/admin/notifications',
+  path: '/admin/notifications',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminHolidaysRoute = AppAdminHolidaysRouteImport.update({
+  id: '/admin/holidays',
+  path: '/admin/holidays',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminAuditLogsRoute = AppAdminAuditLogsRouteImport.update({
+  id: '/admin/audit-logs',
+  path: '/admin/audit-logs',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminApprovalsRoute = AppAdminApprovalsRouteImport.update({
+  id: '/admin/approvals',
+  path: '/admin/approvals',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/admin/approvals': typeof AppAdminApprovalsRoute
+  '/admin/audit-logs': typeof AppAdminAuditLogsRoute
+  '/admin/holidays': typeof AppAdminHolidaysRoute
+  '/admin/notifications': typeof AppAdminNotificationsRoute
+  '/admin/settings': typeof AppAdminSettingsRoute
+  '/admin/users': typeof AppAdminUsersRoute
+  '/analytics/collections': typeof AppAnalyticsCollectionsRoute
+  '/analytics/consumption': typeof AppAnalyticsConsumptionRoute
+  '/analytics/custom': typeof AppAnalyticsCustomRoute
+  '/analytics/meters': typeof AppAnalyticsMetersRoute
+  '/analytics/revenue': typeof AppAnalyticsRevenueRoute
+  '/analytics/water-loss': typeof AppAnalyticsWaterLossRoute
+  '/billing/bills': typeof AppBillingBillsRoute
+  '/billing/collections': typeof AppBillingCollectionsRoute
+  '/billing/payments': typeof AppBillingPaymentsRoute
+  '/billing/schedules': typeof AppBillingSchedulesRoute
+  '/billing/tariffs': typeof AppBillingTariffsRoute
   '/customers/$id': typeof AppCustomersIdRoute
+  '/customers/admin-owners': typeof AppCustomersAdminOwnersRoute
+  '/customers/connections': typeof AppCustomersConnectionsRoute
   '/customers/new': typeof AppCustomersNewRoute
+  '/customers/requests': typeof AppCustomersRequestsRoute
+  '/customers/utility-owners': typeof AppCustomersUtilityOwnersRoute
   '/dashboard/alerts': typeof AppDashboardAlertsRoute
   '/dashboard/billing': typeof AppDashboardBillingRoute
   '/dashboard/consumer': typeof AppDashboardConsumerRoute
   '/dashboard/mdm': typeof AppDashboardMdmRoute
   '/meters/$id': typeof AppMetersIdRoute
+  '/meters/alerts': typeof AppMetersAlertsRoute
+  '/meters/health': typeof AppMetersHealthRoute
   '/meters/hierarchy': typeof AppMetersHierarchyRoute
+  '/meters/read-cycles': typeof AppMetersReadCyclesRoute
+  '/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
   '/customers/': typeof AppCustomersIndexRoute
   '/dashboard/': typeof AppDashboardIndexRoute
   '/meters/': typeof AppMetersIndexRoute
@@ -120,14 +296,39 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/admin/approvals': typeof AppAdminApprovalsRoute
+  '/admin/audit-logs': typeof AppAdminAuditLogsRoute
+  '/admin/holidays': typeof AppAdminHolidaysRoute
+  '/admin/notifications': typeof AppAdminNotificationsRoute
+  '/admin/settings': typeof AppAdminSettingsRoute
+  '/admin/users': typeof AppAdminUsersRoute
+  '/analytics/collections': typeof AppAnalyticsCollectionsRoute
+  '/analytics/consumption': typeof AppAnalyticsConsumptionRoute
+  '/analytics/custom': typeof AppAnalyticsCustomRoute
+  '/analytics/meters': typeof AppAnalyticsMetersRoute
+  '/analytics/revenue': typeof AppAnalyticsRevenueRoute
+  '/analytics/water-loss': typeof AppAnalyticsWaterLossRoute
+  '/billing/bills': typeof AppBillingBillsRoute
+  '/billing/collections': typeof AppBillingCollectionsRoute
+  '/billing/payments': typeof AppBillingPaymentsRoute
+  '/billing/schedules': typeof AppBillingSchedulesRoute
+  '/billing/tariffs': typeof AppBillingTariffsRoute
   '/customers/$id': typeof AppCustomersIdRoute
+  '/customers/admin-owners': typeof AppCustomersAdminOwnersRoute
+  '/customers/connections': typeof AppCustomersConnectionsRoute
   '/customers/new': typeof AppCustomersNewRoute
+  '/customers/requests': typeof AppCustomersRequestsRoute
+  '/customers/utility-owners': typeof AppCustomersUtilityOwnersRoute
   '/dashboard/alerts': typeof AppDashboardAlertsRoute
   '/dashboard/billing': typeof AppDashboardBillingRoute
   '/dashboard/consumer': typeof AppDashboardConsumerRoute
   '/dashboard/mdm': typeof AppDashboardMdmRoute
   '/meters/$id': typeof AppMetersIdRoute
+  '/meters/alerts': typeof AppMetersAlertsRoute
+  '/meters/health': typeof AppMetersHealthRoute
   '/meters/hierarchy': typeof AppMetersHierarchyRoute
+  '/meters/read-cycles': typeof AppMetersReadCyclesRoute
+  '/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
   '/customers': typeof AppCustomersIndexRoute
   '/dashboard': typeof AppDashboardIndexRoute
   '/meters': typeof AppMetersIndexRoute
@@ -138,14 +339,39 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/_app/admin/approvals': typeof AppAdminApprovalsRoute
+  '/_app/admin/audit-logs': typeof AppAdminAuditLogsRoute
+  '/_app/admin/holidays': typeof AppAdminHolidaysRoute
+  '/_app/admin/notifications': typeof AppAdminNotificationsRoute
+  '/_app/admin/settings': typeof AppAdminSettingsRoute
+  '/_app/admin/users': typeof AppAdminUsersRoute
+  '/_app/analytics/collections': typeof AppAnalyticsCollectionsRoute
+  '/_app/analytics/consumption': typeof AppAnalyticsConsumptionRoute
+  '/_app/analytics/custom': typeof AppAnalyticsCustomRoute
+  '/_app/analytics/meters': typeof AppAnalyticsMetersRoute
+  '/_app/analytics/revenue': typeof AppAnalyticsRevenueRoute
+  '/_app/analytics/water-loss': typeof AppAnalyticsWaterLossRoute
+  '/_app/billing/bills': typeof AppBillingBillsRoute
+  '/_app/billing/collections': typeof AppBillingCollectionsRoute
+  '/_app/billing/payments': typeof AppBillingPaymentsRoute
+  '/_app/billing/schedules': typeof AppBillingSchedulesRoute
+  '/_app/billing/tariffs': typeof AppBillingTariffsRoute
   '/_app/customers/$id': typeof AppCustomersIdRoute
+  '/_app/customers/admin-owners': typeof AppCustomersAdminOwnersRoute
+  '/_app/customers/connections': typeof AppCustomersConnectionsRoute
   '/_app/customers/new': typeof AppCustomersNewRoute
+  '/_app/customers/requests': typeof AppCustomersRequestsRoute
+  '/_app/customers/utility-owners': typeof AppCustomersUtilityOwnersRoute
   '/_app/dashboard/alerts': typeof AppDashboardAlertsRoute
   '/_app/dashboard/billing': typeof AppDashboardBillingRoute
   '/_app/dashboard/consumer': typeof AppDashboardConsumerRoute
   '/_app/dashboard/mdm': typeof AppDashboardMdmRoute
   '/_app/meters/$id': typeof AppMetersIdRoute
+  '/_app/meters/alerts': typeof AppMetersAlertsRoute
+  '/_app/meters/health': typeof AppMetersHealthRoute
   '/_app/meters/hierarchy': typeof AppMetersHierarchyRoute
+  '/_app/meters/read-cycles': typeof AppMetersReadCyclesRoute
+  '/_app/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
   '/_app/customers/': typeof AppCustomersIndexRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
   '/_app/meters/': typeof AppMetersIndexRoute
@@ -156,14 +382,39 @@ export interface FileRouteTypes {
     | '/'
     | '/forgot-password'
     | '/login'
+    | '/admin/approvals'
+    | '/admin/audit-logs'
+    | '/admin/holidays'
+    | '/admin/notifications'
+    | '/admin/settings'
+    | '/admin/users'
+    | '/analytics/collections'
+    | '/analytics/consumption'
+    | '/analytics/custom'
+    | '/analytics/meters'
+    | '/analytics/revenue'
+    | '/analytics/water-loss'
+    | '/billing/bills'
+    | '/billing/collections'
+    | '/billing/payments'
+    | '/billing/schedules'
+    | '/billing/tariffs'
     | '/customers/$id'
+    | '/customers/admin-owners'
+    | '/customers/connections'
     | '/customers/new'
+    | '/customers/requests'
+    | '/customers/utility-owners'
     | '/dashboard/alerts'
     | '/dashboard/billing'
     | '/dashboard/consumer'
     | '/dashboard/mdm'
     | '/meters/$id'
+    | '/meters/alerts'
+    | '/meters/health'
     | '/meters/hierarchy'
+    | '/meters/read-cycles'
+    | '/meters/read-exceptions'
     | '/customers/'
     | '/dashboard/'
     | '/meters/'
@@ -172,14 +423,39 @@ export interface FileRouteTypes {
     | '/'
     | '/forgot-password'
     | '/login'
+    | '/admin/approvals'
+    | '/admin/audit-logs'
+    | '/admin/holidays'
+    | '/admin/notifications'
+    | '/admin/settings'
+    | '/admin/users'
+    | '/analytics/collections'
+    | '/analytics/consumption'
+    | '/analytics/custom'
+    | '/analytics/meters'
+    | '/analytics/revenue'
+    | '/analytics/water-loss'
+    | '/billing/bills'
+    | '/billing/collections'
+    | '/billing/payments'
+    | '/billing/schedules'
+    | '/billing/tariffs'
     | '/customers/$id'
+    | '/customers/admin-owners'
+    | '/customers/connections'
     | '/customers/new'
+    | '/customers/requests'
+    | '/customers/utility-owners'
     | '/dashboard/alerts'
     | '/dashboard/billing'
     | '/dashboard/consumer'
     | '/dashboard/mdm'
     | '/meters/$id'
+    | '/meters/alerts'
+    | '/meters/health'
     | '/meters/hierarchy'
+    | '/meters/read-cycles'
+    | '/meters/read-exceptions'
     | '/customers'
     | '/dashboard'
     | '/meters'
@@ -189,14 +465,39 @@ export interface FileRouteTypes {
     | '/_app'
     | '/forgot-password'
     | '/login'
+    | '/_app/admin/approvals'
+    | '/_app/admin/audit-logs'
+    | '/_app/admin/holidays'
+    | '/_app/admin/notifications'
+    | '/_app/admin/settings'
+    | '/_app/admin/users'
+    | '/_app/analytics/collections'
+    | '/_app/analytics/consumption'
+    | '/_app/analytics/custom'
+    | '/_app/analytics/meters'
+    | '/_app/analytics/revenue'
+    | '/_app/analytics/water-loss'
+    | '/_app/billing/bills'
+    | '/_app/billing/collections'
+    | '/_app/billing/payments'
+    | '/_app/billing/schedules'
+    | '/_app/billing/tariffs'
     | '/_app/customers/$id'
+    | '/_app/customers/admin-owners'
+    | '/_app/customers/connections'
     | '/_app/customers/new'
+    | '/_app/customers/requests'
+    | '/_app/customers/utility-owners'
     | '/_app/dashboard/alerts'
     | '/_app/dashboard/billing'
     | '/_app/dashboard/consumer'
     | '/_app/dashboard/mdm'
     | '/_app/meters/$id'
+    | '/_app/meters/alerts'
+    | '/_app/meters/health'
     | '/_app/meters/hierarchy'
+    | '/_app/meters/read-cycles'
+    | '/_app/meters/read-exceptions'
     | '/_app/customers/'
     | '/_app/dashboard/'
     | '/_app/meters/'
@@ -260,11 +561,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCustomersIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/meters/read-exceptions': {
+      id: '/_app/meters/read-exceptions'
+      path: '/meters/read-exceptions'
+      fullPath: '/meters/read-exceptions'
+      preLoaderRoute: typeof AppMetersReadExceptionsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/meters/read-cycles': {
+      id: '/_app/meters/read-cycles'
+      path: '/meters/read-cycles'
+      fullPath: '/meters/read-cycles'
+      preLoaderRoute: typeof AppMetersReadCyclesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/meters/hierarchy': {
       id: '/_app/meters/hierarchy'
       path: '/meters/hierarchy'
       fullPath: '/meters/hierarchy'
       preLoaderRoute: typeof AppMetersHierarchyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/meters/health': {
+      id: '/_app/meters/health'
+      path: '/meters/health'
+      fullPath: '/meters/health'
+      preLoaderRoute: typeof AppMetersHealthRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/meters/alerts': {
+      id: '/_app/meters/alerts'
+      path: '/meters/alerts'
+      fullPath: '/meters/alerts'
+      preLoaderRoute: typeof AppMetersAlertsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/meters/$id': {
@@ -302,11 +631,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardAlertsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/customers/utility-owners': {
+      id: '/_app/customers/utility-owners'
+      path: '/customers/utility-owners'
+      fullPath: '/customers/utility-owners'
+      preLoaderRoute: typeof AppCustomersUtilityOwnersRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customers/requests': {
+      id: '/_app/customers/requests'
+      path: '/customers/requests'
+      fullPath: '/customers/requests'
+      preLoaderRoute: typeof AppCustomersRequestsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/customers/new': {
       id: '/_app/customers/new'
       path: '/customers/new'
       fullPath: '/customers/new'
       preLoaderRoute: typeof AppCustomersNewRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customers/connections': {
+      id: '/_app/customers/connections'
+      path: '/customers/connections'
+      fullPath: '/customers/connections'
+      preLoaderRoute: typeof AppCustomersConnectionsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customers/admin-owners': {
+      id: '/_app/customers/admin-owners'
+      path: '/customers/admin-owners'
+      fullPath: '/customers/admin-owners'
+      preLoaderRoute: typeof AppCustomersAdminOwnersRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/customers/$id': {
@@ -316,32 +673,201 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCustomersIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/billing/tariffs': {
+      id: '/_app/billing/tariffs'
+      path: '/billing/tariffs'
+      fullPath: '/billing/tariffs'
+      preLoaderRoute: typeof AppBillingTariffsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/billing/schedules': {
+      id: '/_app/billing/schedules'
+      path: '/billing/schedules'
+      fullPath: '/billing/schedules'
+      preLoaderRoute: typeof AppBillingSchedulesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/billing/payments': {
+      id: '/_app/billing/payments'
+      path: '/billing/payments'
+      fullPath: '/billing/payments'
+      preLoaderRoute: typeof AppBillingPaymentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/billing/collections': {
+      id: '/_app/billing/collections'
+      path: '/billing/collections'
+      fullPath: '/billing/collections'
+      preLoaderRoute: typeof AppBillingCollectionsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/billing/bills': {
+      id: '/_app/billing/bills'
+      path: '/billing/bills'
+      fullPath: '/billing/bills'
+      preLoaderRoute: typeof AppBillingBillsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/analytics/water-loss': {
+      id: '/_app/analytics/water-loss'
+      path: '/analytics/water-loss'
+      fullPath: '/analytics/water-loss'
+      preLoaderRoute: typeof AppAnalyticsWaterLossRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/analytics/revenue': {
+      id: '/_app/analytics/revenue'
+      path: '/analytics/revenue'
+      fullPath: '/analytics/revenue'
+      preLoaderRoute: typeof AppAnalyticsRevenueRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/analytics/meters': {
+      id: '/_app/analytics/meters'
+      path: '/analytics/meters'
+      fullPath: '/analytics/meters'
+      preLoaderRoute: typeof AppAnalyticsMetersRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/analytics/custom': {
+      id: '/_app/analytics/custom'
+      path: '/analytics/custom'
+      fullPath: '/analytics/custom'
+      preLoaderRoute: typeof AppAnalyticsCustomRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/analytics/consumption': {
+      id: '/_app/analytics/consumption'
+      path: '/analytics/consumption'
+      fullPath: '/analytics/consumption'
+      preLoaderRoute: typeof AppAnalyticsConsumptionRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/analytics/collections': {
+      id: '/_app/analytics/collections'
+      path: '/analytics/collections'
+      fullPath: '/analytics/collections'
+      preLoaderRoute: typeof AppAnalyticsCollectionsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/users': {
+      id: '/_app/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AppAdminUsersRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/settings': {
+      id: '/_app/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AppAdminSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/notifications': {
+      id: '/_app/admin/notifications'
+      path: '/admin/notifications'
+      fullPath: '/admin/notifications'
+      preLoaderRoute: typeof AppAdminNotificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/holidays': {
+      id: '/_app/admin/holidays'
+      path: '/admin/holidays'
+      fullPath: '/admin/holidays'
+      preLoaderRoute: typeof AppAdminHolidaysRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/audit-logs': {
+      id: '/_app/admin/audit-logs'
+      path: '/admin/audit-logs'
+      fullPath: '/admin/audit-logs'
+      preLoaderRoute: typeof AppAdminAuditLogsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/approvals': {
+      id: '/_app/admin/approvals'
+      path: '/admin/approvals'
+      fullPath: '/admin/approvals'
+      preLoaderRoute: typeof AppAdminApprovalsRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppAdminApprovalsRoute: typeof AppAdminApprovalsRoute
+  AppAdminAuditLogsRoute: typeof AppAdminAuditLogsRoute
+  AppAdminHolidaysRoute: typeof AppAdminHolidaysRoute
+  AppAdminNotificationsRoute: typeof AppAdminNotificationsRoute
+  AppAdminSettingsRoute: typeof AppAdminSettingsRoute
+  AppAdminUsersRoute: typeof AppAdminUsersRoute
+  AppAnalyticsCollectionsRoute: typeof AppAnalyticsCollectionsRoute
+  AppAnalyticsConsumptionRoute: typeof AppAnalyticsConsumptionRoute
+  AppAnalyticsCustomRoute: typeof AppAnalyticsCustomRoute
+  AppAnalyticsMetersRoute: typeof AppAnalyticsMetersRoute
+  AppAnalyticsRevenueRoute: typeof AppAnalyticsRevenueRoute
+  AppAnalyticsWaterLossRoute: typeof AppAnalyticsWaterLossRoute
+  AppBillingBillsRoute: typeof AppBillingBillsRoute
+  AppBillingCollectionsRoute: typeof AppBillingCollectionsRoute
+  AppBillingPaymentsRoute: typeof AppBillingPaymentsRoute
+  AppBillingSchedulesRoute: typeof AppBillingSchedulesRoute
+  AppBillingTariffsRoute: typeof AppBillingTariffsRoute
   AppCustomersIdRoute: typeof AppCustomersIdRoute
+  AppCustomersAdminOwnersRoute: typeof AppCustomersAdminOwnersRoute
+  AppCustomersConnectionsRoute: typeof AppCustomersConnectionsRoute
   AppCustomersNewRoute: typeof AppCustomersNewRoute
+  AppCustomersRequestsRoute: typeof AppCustomersRequestsRoute
+  AppCustomersUtilityOwnersRoute: typeof AppCustomersUtilityOwnersRoute
   AppDashboardAlertsRoute: typeof AppDashboardAlertsRoute
   AppDashboardBillingRoute: typeof AppDashboardBillingRoute
   AppDashboardConsumerRoute: typeof AppDashboardConsumerRoute
   AppDashboardMdmRoute: typeof AppDashboardMdmRoute
   AppMetersIdRoute: typeof AppMetersIdRoute
+  AppMetersAlertsRoute: typeof AppMetersAlertsRoute
+  AppMetersHealthRoute: typeof AppMetersHealthRoute
   AppMetersHierarchyRoute: typeof AppMetersHierarchyRoute
+  AppMetersReadCyclesRoute: typeof AppMetersReadCyclesRoute
+  AppMetersReadExceptionsRoute: typeof AppMetersReadExceptionsRoute
   AppCustomersIndexRoute: typeof AppCustomersIndexRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppMetersIndexRoute: typeof AppMetersIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminApprovalsRoute: AppAdminApprovalsRoute,
+  AppAdminAuditLogsRoute: AppAdminAuditLogsRoute,
+  AppAdminHolidaysRoute: AppAdminHolidaysRoute,
+  AppAdminNotificationsRoute: AppAdminNotificationsRoute,
+  AppAdminSettingsRoute: AppAdminSettingsRoute,
+  AppAdminUsersRoute: AppAdminUsersRoute,
+  AppAnalyticsCollectionsRoute: AppAnalyticsCollectionsRoute,
+  AppAnalyticsConsumptionRoute: AppAnalyticsConsumptionRoute,
+  AppAnalyticsCustomRoute: AppAnalyticsCustomRoute,
+  AppAnalyticsMetersRoute: AppAnalyticsMetersRoute,
+  AppAnalyticsRevenueRoute: AppAnalyticsRevenueRoute,
+  AppAnalyticsWaterLossRoute: AppAnalyticsWaterLossRoute,
+  AppBillingBillsRoute: AppBillingBillsRoute,
+  AppBillingCollectionsRoute: AppBillingCollectionsRoute,
+  AppBillingPaymentsRoute: AppBillingPaymentsRoute,
+  AppBillingSchedulesRoute: AppBillingSchedulesRoute,
+  AppBillingTariffsRoute: AppBillingTariffsRoute,
   AppCustomersIdRoute: AppCustomersIdRoute,
+  AppCustomersAdminOwnersRoute: AppCustomersAdminOwnersRoute,
+  AppCustomersConnectionsRoute: AppCustomersConnectionsRoute,
   AppCustomersNewRoute: AppCustomersNewRoute,
+  AppCustomersRequestsRoute: AppCustomersRequestsRoute,
+  AppCustomersUtilityOwnersRoute: AppCustomersUtilityOwnersRoute,
   AppDashboardAlertsRoute: AppDashboardAlertsRoute,
   AppDashboardBillingRoute: AppDashboardBillingRoute,
   AppDashboardConsumerRoute: AppDashboardConsumerRoute,
   AppDashboardMdmRoute: AppDashboardMdmRoute,
   AppMetersIdRoute: AppMetersIdRoute,
+  AppMetersAlertsRoute: AppMetersAlertsRoute,
+  AppMetersHealthRoute: AppMetersHealthRoute,
   AppMetersHierarchyRoute: AppMetersHierarchyRoute,
+  AppMetersReadCyclesRoute: AppMetersReadCyclesRoute,
+  AppMetersReadExceptionsRoute: AppMetersReadExceptionsRoute,
   AppCustomersIndexRoute: AppCustomersIndexRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppMetersIndexRoute: AppMetersIndexRoute,
