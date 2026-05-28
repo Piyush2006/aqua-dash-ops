@@ -5,7 +5,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { tenants, townships, formatNumber } from "@/mocks/data";
-import { toast } from "sonner";
+import { FormDialog } from "@/components/ui/form-dialog";
 
 export const Route = createFileRoute("/_app/customers/utility-owners")({ component: Page });
 
