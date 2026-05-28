@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Check } from "lucide-react";
 import { usersList, roles, permissions, rolePermissions } from "@/mocks/data";
 import { toast } from "sonner";
+import { FormDialog } from "@/components/ui/form-dialog";
 
 export const Route = createFileRoute("/_app/admin/users")({ component: Page });
 
