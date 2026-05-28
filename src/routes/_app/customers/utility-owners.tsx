@@ -37,7 +37,19 @@ function Page() {
   return (
     <>
       <PageHeader title="Utility Owners" description="Top-level operators managing one or more townships" actions={
-        <Button size="sm" onClick={() => toast.success("Owner onboarding flow opened")}><Plus className="mr-1.5 h-4 w-4" /> Onboard owner</Button>
+        <FormDialog
+          trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> Onboard owner</Button>}
+          title="Onboard utility owner"
+          description="Set up a new top-level operator organisation."
+          successMessage="Owner onboarding flow started"
+          fields={[
+            { name: "name", label: "Organisation name", required: true, placeholder: "e.g. Prestige Estates" },
+            { name: "email", label: "Primary contact email", type: "email", required: true },
+            { name: "contact", label: "Contact person", required: true },
+            { name: "phone", label: "Phone", required: true, placeholder: "+91 98XXXXXXXX" },
+            { name: "notes", label: "Notes", type: "textarea" },
+          ]}
+        />
       } />
       <DataTable data={data} columns={cols} rowKey={(r) => r.id} searchKeys={["name", "id"]} searchPlaceholder="Search owners..." />
     </>
