@@ -30,7 +30,17 @@ function Page() {
   return (
     <>
       <PageHeader title="Holiday Calendar" description="Suspended billing runs and field operations on these dates" actions={
-        <Button size="sm" onClick={() => toast.success("Holiday added")}><Plus className="mr-1.5 h-4 w-4" /> Add holiday</Button>
+        <FormDialog
+          trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> Add holiday</Button>}
+          title="Add holiday"
+          successMessage="Holiday added to calendar"
+          fields={[
+            { name: "name", label: "Holiday name", required: true, placeholder: "e.g. Republic Day" },
+            { name: "date", label: "Date", type: "date", required: true },
+            { name: "region", label: "Region", type: "select", required: true, options: ["India", "Karnataka", "Maharashtra", "Tamil Nadu", "Delhi"] },
+            { name: "type", label: "Type", type: "select", required: true, options: ["National", "Regional", "Optional"] },
+          ]}
+        />
       } />
       <DataTable data={data} columns={cols} rowKey={(r) => r.id} />
     </>
