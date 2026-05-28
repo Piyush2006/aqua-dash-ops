@@ -23,7 +23,19 @@ function Page() {
   return (
     <>
       <PageHeader title="Bills" description={`${bills.length} invoices in current cycle`} actions={
-        <Button size="sm" onClick={() => toast.success("Billing run scheduled")}><Zap className="mr-1.5 h-4 w-4" /> Run billing</Button>
+        <FormDialog
+          trigger={<Button size="sm"><Zap className="mr-1.5 h-4 w-4" /> Run billing</Button>}
+          title="Run billing cycle"
+          description="Generate invoices for the selected scope."
+          submitLabel="Run now"
+          successMessage="Billing run scheduled"
+          fields={[
+            { name: "scope", label: "Scope", type: "select", required: true, options: ["All consumers", "Residential", "Commercial", "Industrial"] },
+            { name: "period", label: "Billing period", required: true, placeholder: "e.g. Nov 2025" },
+            { name: "dueDate", label: "Due date", type: "date", required: true },
+            { name: "notes", label: "Notes", type: "textarea" },
+          ]}
+        />
       } />
       <DataTable data={bills} columns={cols} rowKey={(r) => r.id} searchKeys={["customerName", "id"]} pageSize={15} />
     </>
