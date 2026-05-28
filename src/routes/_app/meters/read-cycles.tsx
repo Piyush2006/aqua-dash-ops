@@ -26,7 +26,17 @@ function Page() {
   return (
     <>
       <PageHeader title="Read Cycles" description="Scheduled meter read jobs across the fleet" actions={
-        <Button size="sm" onClick={() => toast.success("New cycle drafted")}><Plus className="mr-1.5 h-4 w-4" /> New cycle</Button>
+        <FormDialog
+          trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> New cycle</Button>}
+          title="New read cycle"
+          successMessage="New cycle drafted"
+          fields={[
+            { name: "name", label: "Cycle name", required: true, placeholder: "e.g. Daily Industrial Reads" },
+            { name: "frequency", label: "Frequency", type: "select", required: true, options: ["Hourly", "Daily", "Weekly", "Monthly"] },
+            { name: "scope", label: "Meter scope", type: "select", required: true, options: ["All meters", "Residential", "Commercial", "Industrial", "Bulk"] },
+            { name: "startTime", label: "Start time", placeholder: "23:00", required: true },
+          ]}
+        />
       } />
       <DataTable data={readCycles} columns={cols} rowKey={(r) => r.id} />
     </>
