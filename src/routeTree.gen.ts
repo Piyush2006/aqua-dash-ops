@@ -14,6 +14,10 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
+import { Route as AppDashboardMdmRouteImport } from './routes/_app/dashboard/mdm'
+import { Route as AppDashboardConsumerRouteImport } from './routes/_app/dashboard/consumer'
+import { Route as AppDashboardBillingRouteImport } from './routes/_app/dashboard/billing'
+import { Route as AppDashboardAlertsRouteImport } from './routes/_app/dashboard/alerts'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -39,17 +43,45 @@ const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
   path: '/dashboard/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppDashboardMdmRoute = AppDashboardMdmRouteImport.update({
+  id: '/dashboard/mdm',
+  path: '/dashboard/mdm',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardConsumerRoute = AppDashboardConsumerRouteImport.update({
+  id: '/dashboard/consumer',
+  path: '/dashboard/consumer',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardBillingRoute = AppDashboardBillingRouteImport.update({
+  id: '/dashboard/billing',
+  path: '/dashboard/billing',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardAlertsRoute = AppDashboardAlertsRouteImport.update({
+  id: '/dashboard/alerts',
+  path: '/dashboard/alerts',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/dashboard/alerts': typeof AppDashboardAlertsRoute
+  '/dashboard/billing': typeof AppDashboardBillingRoute
+  '/dashboard/consumer': typeof AppDashboardConsumerRoute
+  '/dashboard/mdm': typeof AppDashboardMdmRoute
   '/dashboard/': typeof AppDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/dashboard/alerts': typeof AppDashboardAlertsRoute
+  '/dashboard/billing': typeof AppDashboardBillingRoute
+  '/dashboard/consumer': typeof AppDashboardConsumerRoute
+  '/dashboard/mdm': typeof AppDashboardMdmRoute
   '/dashboard': typeof AppDashboardIndexRoute
 }
 export interface FileRoutesById {
@@ -58,19 +90,43 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/_app/dashboard/alerts': typeof AppDashboardAlertsRoute
+  '/_app/dashboard/billing': typeof AppDashboardBillingRoute
+  '/_app/dashboard/consumer': typeof AppDashboardConsumerRoute
+  '/_app/dashboard/mdm': typeof AppDashboardMdmRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/forgot-password' | '/login' | '/dashboard/'
+  fullPaths:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/dashboard/alerts'
+    | '/dashboard/billing'
+    | '/dashboard/consumer'
+    | '/dashboard/mdm'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/forgot-password' | '/login' | '/dashboard'
+  to:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/dashboard/alerts'
+    | '/dashboard/billing'
+    | '/dashboard/consumer'
+    | '/dashboard/mdm'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/forgot-password'
     | '/login'
+    | '/_app/dashboard/alerts'
+    | '/_app/dashboard/billing'
+    | '/_app/dashboard/consumer'
+    | '/_app/dashboard/mdm'
     | '/_app/dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -118,14 +174,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/dashboard/mdm': {
+      id: '/_app/dashboard/mdm'
+      path: '/dashboard/mdm'
+      fullPath: '/dashboard/mdm'
+      preLoaderRoute: typeof AppDashboardMdmRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard/consumer': {
+      id: '/_app/dashboard/consumer'
+      path: '/dashboard/consumer'
+      fullPath: '/dashboard/consumer'
+      preLoaderRoute: typeof AppDashboardConsumerRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard/billing': {
+      id: '/_app/dashboard/billing'
+      path: '/dashboard/billing'
+      fullPath: '/dashboard/billing'
+      preLoaderRoute: typeof AppDashboardBillingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard/alerts': {
+      id: '/_app/dashboard/alerts'
+      path: '/dashboard/alerts'
+      fullPath: '/dashboard/alerts'
+      preLoaderRoute: typeof AppDashboardAlertsRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppDashboardAlertsRoute: typeof AppDashboardAlertsRoute
+  AppDashboardBillingRoute: typeof AppDashboardBillingRoute
+  AppDashboardConsumerRoute: typeof AppDashboardConsumerRoute
+  AppDashboardMdmRoute: typeof AppDashboardMdmRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppDashboardAlertsRoute: AppDashboardAlertsRoute,
+  AppDashboardBillingRoute: AppDashboardBillingRoute,
+  AppDashboardConsumerRoute: AppDashboardConsumerRoute,
+  AppDashboardMdmRoute: AppDashboardMdmRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
 }
 
@@ -140,3 +232,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
