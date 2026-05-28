@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Battery, BatteryLow, Wifi, Plus } from "lucide-react";
 import { meters, townships, Meter } from "@/mocks/data";
 import { toast } from "sonner";
+import { FormDialog } from "@/components/ui/form-dialog";
 
 export const Route = createFileRoute("/_app/meters/")({ component: MetersList });
 
