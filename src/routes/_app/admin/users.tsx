@@ -21,7 +21,17 @@ function Page() {
   return (
     <>
       <PageHeader title="Users & Roles" description="Identity, access and permission management" actions={
-        <Button size="sm" onClick={() => toast.success("User invite sent")}><Plus className="mr-1.5 h-4 w-4" /> Invite user</Button>
+        <FormDialog
+          trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> Invite user</Button>}
+          title="Invite a new user"
+          description="Send an invite email with a role assignment."
+          successMessage="User invite sent"
+          fields={[
+            { name: "name", label: "Full name", required: true },
+            { name: "email", label: "Email", type: "email", required: true },
+            { name: "role", label: "Role", type: "select", required: true, options: roles.map((r) => r.name) },
+          ]}
+        />
       } />
       <DataTable data={usersList} columns={cols} rowKey={(r) => r.id} searchKeys={["name", "email", "role"]} />
 
