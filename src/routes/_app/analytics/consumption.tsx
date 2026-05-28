@@ -11,17 +11,17 @@ function Page() {
     <>
       <PageHeader title="Consumption Analytics" description="Domestic, commercial and common-area usage patterns" />
       <div className="mb-6 grid gap-4 md:grid-cols-4">
-        <KpiCard label="Total Consumption" value="28.45 ML" trend={{ value: 4.2 }} variant="gradient" />
-        <KpiCard label="Per-capita (LPCD)" value="142 L" trend={{ value: -1.8 }} />
+        <KpiCard label="Total Consumption" value="28.45 ML" delta={4.2} variant="primary" />
+        <KpiCard label="Per-capita (LPCD)" value="142 L" delta={-1.8} />
         <KpiCard label="Peak Hour" value="07:00 – 09:00" />
-        <KpiCard label="Common Area %" value="11.4%" trend={{ value: 0.6 }} />
+        <KpiCard label="Common Area %" value="11.4%" delta={0.6} />
       </div>
       <div className="rounded-xl border bg-card p-5 shadow-card">
         <h3 className="mb-3 text-sm font-semibold">Consumption Mix (12 mo)</h3>
-        <TrendArea data={consumptionTrend} xKey="month" series={[
-          { key: "domestic", name: "Domestic", color: "var(--color-primary)" },
-          { key: "commercial", name: "Commercial", color: "var(--color-accent)" },
-          { key: "common", name: "Common", color: "var(--color-warning)" },
+        <TrendArea data={consumptionTrend} x="month" series={[
+          { key: "domestic", label: "Domestic", color: "var(--color-primary)" },
+          { key: "commercial", label: "Commercial", color: "var(--color-accent)" },
+          { key: "common", label: "Common", color: "var(--color-warning)" },
         ]} height={280} />
       </div>
       <div className="mt-4 rounded-xl border bg-card p-5 shadow-card">

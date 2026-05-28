@@ -12,17 +12,17 @@ function Page() {
     <>
       <PageHeader title="Collections" description="Receivables, aging buckets and follow-up actions" />
       <div className="mb-6 grid gap-4 md:grid-cols-4">
-        <KpiCard label="Collected (Nov)" value="₹4.21 Cr" trend={{ value: 8.2 }} />
+        <KpiCard label="Collected (Nov)" value="₹4.21 Cr" delta={8.2} />
         <KpiCard label="Target" value="₹4.10 Cr" />
-        <KpiCard label="Outstanding" value="₹3.42 Cr" trend={{ value: -5.6 }} />
+        <KpiCard label="Outstanding" value="₹3.42 Cr" delta={-5.6} />
         <KpiCard label="Defaulters" value={topDefaulters.length.toString()} />
       </div>
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="rounded-xl border bg-card p-5 shadow-card lg:col-span-2">
           <h3 className="mb-3 text-sm font-semibold">Collection vs Outstanding (12 mo)</h3>
-          <TrendArea data={revenueTrend} xKey="month" series={[
-            { key: "collected", name: "Collected", color: "var(--color-success)" },
-            { key: "outstanding", name: "Outstanding", color: "var(--color-warning)" },
+          <TrendArea data={revenueTrend} x="month" series={[
+            { key: "collected", label: "Collected", color: "var(--color-success)" },
+            { key: "outstanding", label: "Outstanding", color: "var(--color-warning)" },
           ]} height={240} />
         </div>
         <div className="rounded-xl border bg-card p-5 shadow-card">
