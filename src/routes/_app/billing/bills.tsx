@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Zap } from "lucide-react";
 import { bills, Bill, formatCurrency } from "@/mocks/data";
 import { toast } from "sonner";
+import { FormDialog } from "@/components/ui/form-dialog";
 
 export const Route = createFileRoute("/_app/billing/bills")({ component: Page });
 
