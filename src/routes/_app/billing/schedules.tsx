@@ -5,17 +5,17 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
 import { Plus, Play } from "lucide-react";
 import { toast } from "sonner";
-import { FormDialog } from "@/components/ui/form-dialog";
+import { BillingScheduleBuilderDialog } from "@/components/billing/BillingScheduleBuilderDialog";
 
 export const Route = createFileRoute("/_app/billing/schedules")({ component: Page });
 
-type Sched = { id: string; name: string; cycle: string; scope: string; nextRun: string; lastRun: string; status: string };
+type Sched = { id: string; name: string; cycle: string; scope: string; period: string; genDate: string; status: string };
 const data: Sched[] = [
-  { id: "BS-001", name: "Monthly Residential Billing", cycle: "Monthly · 1st", scope: "All residential", nextRun: "01 Dec 2025, 02:00", lastRun: "01 Nov 2025", status: "Active" },
-  { id: "BS-002", name: "Weekly Commercial Billing", cycle: "Weekly · Mon", scope: "Commercial tier", nextRun: "02 Dec 2025, 06:00", lastRun: "25 Nov 2025", status: "Active" },
-  { id: "BS-003", name: "Industrial Daily", cycle: "Daily · 23:00", scope: "Industrial bulk", nextRun: "Tonight 23:00", lastRun: "Yesterday", status: "Active" },
-  { id: "BS-004", name: "Penalty Recompute", cycle: "Monthly · 16th", scope: "Overdue invoices", nextRun: "16 Dec 2025", lastRun: "16 Nov 2025", status: "Active" },
-  { id: "BS-005", name: "Annual Tariff Revision", cycle: "Yearly · Apr 1", scope: "All consumers", nextRun: "01 Apr 2026", lastRun: "01 Apr 2025", status: "Draft" },
+  { id: "BS-001", name: "January Residential", cycle: "Monthly", scope: "All residential", period: "01 Jan – 31 Jan 2026", genDate: "05 Feb 2026", status: "Active" },
+  { id: "BS-002", name: "Weekly Commercial", cycle: "Weekly", scope: "Commercial", period: "20 – 26 Nov 2025", genDate: "27 Nov 2025", status: "Active" },
+  { id: "BS-003", name: "Industrial Daily", cycle: "Daily", scope: "Industrial bulk", period: "Rolling 24h", genDate: "Daily 23:00", status: "Active" },
+  { id: "BS-004", name: "Penalty Recompute", cycle: "Monthly", scope: "Overdue invoices", period: "Nov 2025", genDate: "16 Dec 2025", status: "Active" },
+  { id: "BS-005", name: "Annual Tariff Revision", cycle: "Yearly", scope: "All consumers", period: "Apr 2025 – Mar 2026", genDate: "01 Apr 2026", status: "Draft" },
 ];
 
 function Page() {
@@ -24,8 +24,8 @@ function Page() {
     { key: "name", header: "Name", accessor: (r) => <span className="font-medium">{r.name}</span>, sortValue: (r) => r.name },
     { key: "cycle", header: "Cycle", accessor: (r) => <span className="rounded-md bg-info-soft px-2 py-0.5 text-xs font-medium text-info">{r.cycle}</span> },
     { key: "scope", header: "Scope", accessor: (r) => <span className="text-muted-foreground">{r.scope}</span> },
-    { key: "lastRun", header: "Last Run", accessor: (r) => r.lastRun },
-    { key: "nextRun", header: "Next Run", accessor: (r) => <span className="font-medium">{r.nextRun}</span> },
+    { key: "period", header: "Billing Period", accessor: (r) => r.period },
+    { key: "genDate", header: "Generate On", accessor: (r) => <span className="font-medium">{r.genDate}</span> },
     { key: "status", header: "Status", accessor: (r) => <StatusBadge status={r.status} dot /> },
     { key: "actions", header: "", accessor: (r) => (
       <Button size="sm" variant="outline" className="h-7" onClick={(e) => { e.stopPropagation(); toast.success(`${r.name} triggered`); }}><Play className="mr-1 h-3 w-3" /> Run</Button>
@@ -33,18 +33,8 @@ function Page() {
   ];
   return (
     <>
-      <PageHeader title="Billing Schedules" description="Automated invoice generation jobs" actions={
-        <FormDialog
-          trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> New schedule</Button>}
-          title="New billing schedule"
-          successMessage="Schedule created"
-          fields={[
-            { name: "name", label: "Schedule name", required: true, placeholder: "e.g. Monthly Residential" },
-            { name: "cycle", label: "Cycle", type: "select", required: true, options: ["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"] },
-            { name: "scope", label: "Scope", type: "select", required: true, options: ["All residential", "All commercial", "Industrial bulk", "All consumers"] },
-            { name: "startDate", label: "First run", type: "date", required: true },
-          ]}
-        />
+      <PageHeader title="Billing Schedules" description="Generate bills using consumption from a billing period" actions={
+        <BillingScheduleBuilderDialog trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> New schedule</Button>} />
       } />
       <DataTable data={data} columns={cols} rowKey={(r) => r.id} />
     </>
