@@ -131,6 +131,11 @@ export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
   const taxes = (clamped * taxRate) / 100;
   const finalBill = clamped + taxes;
 
+  useEffect(() => {
+    if (tab === "time" && !(model === "tou" || model === "hybrid")) setTab("pricing");
+    if (tab === "seasonal" && !(model === "seasonal" || model === "hybrid")) setTab("pricing");
+  }, [model, tab]);
+
   const reset = () => {
     setTab("basic");
   };
