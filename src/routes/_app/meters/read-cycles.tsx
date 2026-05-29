@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { DataTable, Column } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
-import { Play, Plus, Gauge } from "lucide-react";
+import { Play, Plus, Gauge, Pencil } from "lucide-react";
 import { readCycles, formatNumber } from "@/mocks/data";
 import { toast } from "sonner";
 import { KpiCard } from "@/components/ui/kpi-card";
