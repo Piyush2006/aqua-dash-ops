@@ -58,7 +58,7 @@ export function ReadCycleBuilderDialog({ trigger, initial, mode = "create" }: { 
 
   const save = (draft?: boolean) => {
     if (!name) { toast.error("Cycle name is required"); setTab("basic"); return; }
-    toast.success(draft ? "Saved as draft" : `Read cycle ${code || name} created`);
+    toast.success(draft ? "Saved as draft" : isEdit ? `Read cycle ${code || name} updated` : `Read cycle ${code || name} created`);
     setOpen(false);
   };
 
