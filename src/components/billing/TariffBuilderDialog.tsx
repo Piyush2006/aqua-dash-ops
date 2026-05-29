@@ -52,21 +52,27 @@ const initialVersions: Version[] = [
 
 type Model = "flat" | "slab" | "tou" | "seasonal" | "hybrid";
 
-export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
+export type TariffInitial = Partial<{
+  name: string; code: string; category: string; status: string;
+  effFrom: string; effTo: string; description: string; model: Model;
+}>;
+
+export function TariffBuilderDialog({ trigger, initial, mode = "create" }: { trigger: ReactNode; initial?: TariffInitial; mode?: "create" | "edit" }) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState("basic");
+  const isEdit = mode === "edit";
 
   // Basic
-  const [name, setName] = useState("");
-  const [code, setCode] = useState("");
-  const [category, setCategory] = useState("Residential");
-  const [effFrom, setEffFrom] = useState("");
-  const [effTo, setEffTo] = useState("");
-  const [status, setStatus] = useState("Draft");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState(initial?.name ?? "");
+  const [code, setCode] = useState(initial?.code ?? "");
+  const [category, setCategory] = useState(initial?.category ?? "Residential");
+  const [effFrom, setEffFrom] = useState(initial?.effFrom ?? "");
+  const [effTo, setEffTo] = useState(initial?.effTo ?? "");
+  const [status, setStatus] = useState(initial?.status ?? "Draft");
+  const [description, setDescription] = useState(initial?.description ?? "");
 
   // Pricing
-  const [model, setModel] = useState<Model>("slab");
+  const [model, setModel] = useState<Model>(initial?.model ?? "slab");
   const [flatRate, setFlatRate] = useState(7);
   const [slabs, setSlabs] = useState<Slab[]>(initialSlabs);
 
@@ -146,7 +152,7 @@ export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
       setTab("basic");
       return;
     }
-    toast.success(`Tariff “${name}” created as Draft (v1.0)`);
+    toast.success(isEdit ? `Tariff “${name}” updated` : `Tariff “${name}” created as Draft (v1.0)`);
     setOpen(false);
     reset();
   };
@@ -160,7 +166,7 @@ export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
             <div>
               <DialogTitle className="flex items-center gap-2 text-lg">
                 <Calculator className="h-5 w-5 text-primary" />
-                Tariff Builder
+                {isEdit ? `Edit Tariff${initial?.name ? ` — ${initial.name}` : ""}` : "Tariff Builder"}
               </DialogTitle>
               <DialogDescription>Configure pricing rules, charges and approval workflow for a utility tariff plan.</DialogDescription>
             </div>
@@ -542,7 +548,7 @@ export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
                 {!isLast ? (
                   <Button onClick={() => setTab(visible[idx + 1])}>Continue</Button>
                 ) : (
-                  <Button onClick={submit}><CheckCircle2 className="mr-1.5 h-4 w-4" /> Submit for Approval</Button>
+                  <Button onClick={submit}><CheckCircle2 className="mr-1.5 h-4 w-4" /> {isEdit ? "Save Changes" : "Submit for Approval"}</Button>
                 )}
               </div>
             </DialogFooter>

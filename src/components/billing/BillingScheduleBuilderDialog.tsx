@@ -17,22 +17,28 @@ import { townships, tariffsList, formatCurrency, formatNumber } from "@/mocks/da
 type Scope = "all" | "township" | "block" | "owner" | "group" | "individual";
 type PeriodType = "monthly" | "custom";
 
-export function BillingScheduleBuilderDialog({ trigger }: { trigger: ReactNode }) {
+export type BillingScheduleInitial = Partial<{
+  name: string; code: string; desc: string; active: boolean;
+  periodStart: string; periodEnd: string; genDate: string;
+}>;
+
+export function BillingScheduleBuilderDialog({ trigger, initial, mode = "create" }: { trigger: ReactNode; initial?: BillingScheduleInitial; mode?: "create" | "edit" }) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState("basic");
+  const isEdit = mode === "edit";
 
-  const [name, setName] = useState("");
-  const [code, setCode] = useState("");
-  const [desc, setDesc] = useState("");
-  const [active, setActive] = useState(true);
+  const [name, setName] = useState(initial?.name ?? "");
+  const [code, setCode] = useState(initial?.code ?? "");
+  const [desc, setDesc] = useState(initial?.desc ?? "");
+  const [active, setActive] = useState(initial?.active ?? true);
 
   const [scope, setScope] = useState<Scope>("all");
   const [selectedTownships, setSelectedTownships] = useState<string[]>([]);
 
   const [periodType, setPeriodType] = useState<PeriodType>("monthly");
-  const [periodStart, setPeriodStart] = useState("2026-01-01");
-  const [periodEnd, setPeriodEnd] = useState("2026-01-31");
-  const [genDate, setGenDate] = useState("2026-02-05");
+  const [periodStart, setPeriodStart] = useState(initial?.periodStart ?? "2026-01-01");
+  const [periodEnd, setPeriodEnd] = useState(initial?.periodEnd ?? "2026-01-31");
+  const [genDate, setGenDate] = useState(initial?.genDate ?? "2026-02-05");
   const [tariff, setTariff] = useState(tariffsList[0]?.id ?? "");
 
   const customers = useMemo(() => {
@@ -51,7 +57,7 @@ export function BillingScheduleBuilderDialog({ trigger }: { trigger: ReactNode }
 
   const save = (draft?: boolean) => {
     if (!name) { toast.error("Schedule name required"); setTab("basic"); return; }
-    toast.success(draft ? "Schedule saved as draft" : `Billing schedule ${name} scheduled for ${genDate}`);
+    toast.success(draft ? "Schedule saved as draft" : isEdit ? `Billing schedule ${name} updated` : `Billing schedule ${name} scheduled for ${genDate}`);
     setOpen(false);
   };
 
@@ -60,7 +66,7 @@ export function BillingScheduleBuilderDialog({ trigger }: { trigger: ReactNode }
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="max-w-5xl p-0">
         <DialogHeader className="border-b px-6 py-4">
-          <DialogTitle className="flex items-center gap-2"><Receipt className="h-5 w-5 text-primary" /> Billing Schedule Builder</DialogTitle>
+          <DialogTitle className="flex items-center gap-2"><Receipt className="h-5 w-5 text-primary" /> {isEdit ? `Edit Schedule${initial?.name ? ` — ${initial.name}` : ""}` : "Billing Schedule Builder"}</DialogTitle>
           <DialogDescription>Generate bills using consumption from a selected billing period.</DialogDescription>
         </DialogHeader>
 
@@ -197,7 +203,7 @@ export function BillingScheduleBuilderDialog({ trigger }: { trigger: ReactNode }
                 {!isLast ? (
                   <Button onClick={() => setTab(visible[idx + 1])}>Continue</Button>
                 ) : (
-                  <Button onClick={() => save(false)}><IndianRupee className="mr-1.5 h-4 w-4" /> Schedule Billing</Button>
+                  <Button onClick={() => save(false)}><IndianRupee className="mr-1.5 h-4 w-4" /> {isEdit ? "Save Changes" : "Schedule Billing"}</Button>
                 )}
               </div>
             </DialogFooter>

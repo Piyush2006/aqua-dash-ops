@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { DataTable, Column } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
-import { Plus, Play } from "lucide-react";
+import { Plus, Play, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { BillingScheduleBuilderDialog } from "@/components/billing/BillingScheduleBuilderDialog";
 
@@ -28,7 +28,14 @@ function Page() {
     { key: "genDate", header: "Generate On", accessor: (r) => <span className="font-medium">{r.genDate}</span> },
     { key: "status", header: "Status", accessor: (r) => <StatusBadge status={r.status} dot /> },
     { key: "actions", header: "", accessor: (r) => (
-      <Button size="sm" variant="outline" className="h-7" onClick={(e) => { e.stopPropagation(); toast.success(`${r.name} triggered`); }}><Play className="mr-1 h-3 w-3" /> Run</Button>
+      <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+        <BillingScheduleBuilderDialog
+          mode="edit"
+          initial={{ name: r.name, code: r.id, active: r.status === "Active", genDate: r.genDate }}
+          trigger={<Button size="sm" variant="ghost" className="h-7 px-2"><Pencil className="mr-1 h-3 w-3" /> Edit</Button>}
+        />
+        <Button size="sm" variant="outline" className="h-7" onClick={() => toast.success(`${r.name} triggered`)}><Play className="mr-1 h-3 w-3" /> Run</Button>
+      </div>
     ) },
   ];
   return (

@@ -19,15 +19,18 @@ type Scope = "township" | "block" | "cluster" | "individual";
 type ScheduleType = "daily" | "weekly" | "monthly" | "custom";
 type Method = "iot" | "manual" | "csv" | "api";
 
-export function ReadCycleBuilderDialog({ trigger }: { trigger: ReactNode }) {
+export type ReadCycleInitial = Partial<{ name: string; code: string; desc: string; active: boolean }>;
+
+export function ReadCycleBuilderDialog({ trigger, initial, mode = "create" }: { trigger: ReactNode; initial?: ReadCycleInitial; mode?: "create" | "edit" }) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState("basic");
+  const isEdit = mode === "edit";
 
   // Basic
-  const [name, setName] = useState("");
-  const [code, setCode] = useState("");
-  const [desc, setDesc] = useState("");
-  const [active, setActive] = useState(true);
+  const [name, setName] = useState(initial?.name ?? "");
+  const [code, setCode] = useState(initial?.code ?? "");
+  const [desc, setDesc] = useState(initial?.desc ?? "");
+  const [active, setActive] = useState(initial?.active ?? true);
 
   // Selection
   const [scope, setScope] = useState<Scope>("township");
@@ -55,7 +58,7 @@ export function ReadCycleBuilderDialog({ trigger }: { trigger: ReactNode }) {
 
   const save = (draft?: boolean) => {
     if (!name) { toast.error("Cycle name is required"); setTab("basic"); return; }
-    toast.success(draft ? "Saved as draft" : `Read cycle ${code || name} created`);
+    toast.success(draft ? "Saved as draft" : isEdit ? `Read cycle ${code || name} updated` : `Read cycle ${code || name} created`);
     setOpen(false);
   };
 
@@ -65,7 +68,7 @@ export function ReadCycleBuilderDialog({ trigger }: { trigger: ReactNode }) {
       <DialogContent className="max-w-5xl p-0">
         <DialogHeader className="border-b px-6 py-4">
           <DialogTitle className="flex items-center gap-2">
-            <Gauge className="h-5 w-5 text-primary" /> Meter Read Cycle Builder
+            <Gauge className="h-5 w-5 text-primary" /> {isEdit ? `Edit Read Cycle${initial?.name ? ` — ${initial.name}` : ""}` : "Meter Read Cycle Builder"}
           </DialogTitle>
           <DialogDescription>Group meters and define when reads are collected. No billing logic.</DialogDescription>
         </DialogHeader>
@@ -230,7 +233,7 @@ export function ReadCycleBuilderDialog({ trigger }: { trigger: ReactNode }) {
                 {!isLast ? (
                   <Button onClick={() => setTab(visible[idx + 1])}>Continue</Button>
                 ) : (
-                  <Button onClick={() => save(false)}><CheckCircle2 className="mr-1.5 h-4 w-4" /> Create Cycle</Button>
+                  <Button onClick={() => save(false)}><CheckCircle2 className="mr-1.5 h-4 w-4" /> {isEdit ? "Save Changes" : "Create Cycle"}</Button>
                 )}
               </div>
             </DialogFooter>
