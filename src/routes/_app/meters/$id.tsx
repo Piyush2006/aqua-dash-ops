@@ -106,22 +106,51 @@ function MeterDetail() {
           </div>
         </TabsContent>
 
-        <TabsContent value="lifecycle" className="mt-4">
-          <div className="rounded-xl border bg-card p-5 shadow-card text-sm">
-            <ul className="space-y-3">
-              {["Manufactured · 2023-01-12", "Provisioned · 2023-03-04", "Installed · " + m.installDate, "First read · " + m.installDate, "Last calibration · 2025-08-15"].map((e, i) => (
-                <li key={i} className="flex gap-3"><span className="h-2 w-2 mt-1.5 shrink-0 rounded-full bg-primary" /><span>{e}</span></li>
+        <TabsContent value="hierarchy" className="mt-4">
+          <div className="rounded-xl border bg-card p-5 shadow-card">
+            <p className="mb-3 text-sm font-semibold">Meter hierarchy</p>
+            <div className="flex flex-wrap items-center gap-1.5 text-sm">
+              {[tw.name, `Block ${m.flat[0]}`, "Cluster-1", `Flat ${m.flat}`].map((p, i, arr) => (
+                <div key={i} className="flex items-center gap-1.5">
+                  <span className={`rounded-md border px-2 py-1 ${i === arr.length - 1 ? "bg-primary/10 border-primary/30 font-medium" : "bg-surface"}`}>{p}</span>
+                  {i < arr.length - 1 && <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
+                </div>
               ))}
-            </ul>
+            </div>
+            <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+              <div className="rounded-lg border bg-surface p-3"><p className="text-xs text-muted-foreground">Parent meter</p><p className="font-mono text-xs mt-1">BLK-{m.townshipId}-{m.flat[0]}</p></div>
+              <div className="rounded-lg border bg-surface p-3"><p className="text-xs text-muted-foreground">Category</p><p className="mt-1">Flat Meter</p></div>
+            </div>
           </div>
         </TabsContent>
 
-        <TabsContent value="topology" className="mt-4">
+        <TabsContent value="assignment" className="mt-4">
           <div className="rounded-xl border bg-card p-5 shadow-card">
-            <p className="text-sm">Township → Block → Cluster → This meter (Flat {m.flat})</p>
-            <p className="mt-2 text-xs text-muted-foreground">See Meter Hierarchy for full visualization.</p>
+            <p className="mb-3 text-sm font-semibold">Consumer assignment history</p>
+            <div className="divide-y">
+              {(() => {
+                const cur = customers.find((c) => c.id === m.customerId);
+                const past = customers.filter((c) => c.id !== m.customerId).slice(0, 2);
+                return (
+                  <>
+                    <div className="flex items-center justify-between py-3 text-sm">
+                      <div><p className="font-medium">{cur?.name ?? "—"} <span className="ml-2 text-xs text-success">Current</span></p><p className="text-xs text-muted-foreground font-mono">{cur?.id}</p></div>
+                      <span className="text-xs text-muted-foreground">since {m.installDate}</span>
+                    </div>
+                    {past.map((c) => (
+                      <div key={c.id} className="flex items-center justify-between py-3 text-sm text-muted-foreground">
+                        <div><p>{c.name}</p><p className="text-xs font-mono">{c.id}</p></div>
+                        <span className="text-xs">2022-04 → 2023-08</span>
+                      </div>
+                    ))}
+                  </>
+                );
+              })()}
+            </div>
+            <p className="mt-4 text-xs text-muted-foreground">Consumer ↔ meter relationship is managed entirely from Meter Operations.</p>
           </div>
         </TabsContent>
+
 
         <TabsContent value="audit" className="mt-4">
           <div className="rounded-xl border bg-card p-5 shadow-card">
