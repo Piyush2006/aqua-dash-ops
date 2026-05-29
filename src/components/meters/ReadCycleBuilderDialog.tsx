@@ -233,7 +233,7 @@ export function ReadCycleBuilderDialog({ trigger, initial, mode = "create" }: { 
                 {!isLast ? (
                   <Button onClick={() => setTab(visible[idx + 1])}>Continue</Button>
                 ) : (
-                  <Button onClick={() => save(false)}><CheckCircle2 className="mr-1.5 h-4 w-4" /> Create Cycle</Button>
+                  <Button onClick={() => save(false)}><CheckCircle2 className="mr-1.5 h-4 w-4" /> {isEdit ? "Save Changes" : "Create Cycle"}</Button>
                 )}
               </div>
             </DialogFooter>
