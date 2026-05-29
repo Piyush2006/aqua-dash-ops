@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { DataTable, Column } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
 import { tariffsList, Tariff, formatNumber } from "@/mocks/data";
 import { TariffBuilderDialog } from "@/components/billing/TariffBuilderDialog";
 
@@ -18,6 +18,13 @@ function Page() {
     { key: "applied", header: "Applied to", accessor: (r) => <span className="tabular-nums">{formatNumber(r.appliedTo)}</span>, sortValue: (r) => r.appliedTo },
     { key: "effective", header: "Effective", accessor: (r) => r.effectiveFrom },
     { key: "status", header: "Status", accessor: (r) => <StatusBadge status={r.status} dot /> },
+    { key: "actions", header: "", accessor: (r) => (
+      <TariffBuilderDialog
+        mode="edit"
+        initial={{ name: r.name, code: r.id, status: r.status, effFrom: r.effectiveFrom }}
+        trigger={<Button size="sm" variant="ghost" className="h-7 px-2" onClick={(e) => e.stopPropagation()}><Pencil className="mr-1 h-3 w-3" /> Edit</Button>}
+      />
+    ) },
   ];
   return (
     <>
