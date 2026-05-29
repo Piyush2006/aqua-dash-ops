@@ -166,15 +166,15 @@ export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
         <Tabs value={tab} onValueChange={setTab} className="flex-1 flex flex-col min-h-0">
           <div className="px-6 pt-3 border-b">
             <TabsList className="h-9 bg-transparent p-0 gap-1">
-              {[
-                ["basic", "Basic Details"],
-                ["pricing", "Pricing Rules"],
-                ["time", "Time Rules"],
-                ["seasonal", "Seasonal Rules"],
-                ["charges", "Charges"],
-                ["sim", "Simulation"],
-                ["history", "Version History"],
-              ].map(([v, l]) => (
+              {([
+                ["basic", "Basic Details", true],
+                ["pricing", "Pricing Rules", true],
+                ["time", "Time Rules", model === "tou" || model === "hybrid"],
+                ["seasonal", "Seasonal Rules", model === "seasonal" || model === "hybrid"],
+                ["charges", "Charges", true],
+                ["sim", "Simulation", true],
+                ["history", "Version History", true],
+              ] as const).filter(([, , show]) => show).map(([v, l]) => (
                 <TabsTrigger key={v} value={v} className="data-[state=active]:bg-muted">{l}</TabsTrigger>
               ))}
             </TabsList>
