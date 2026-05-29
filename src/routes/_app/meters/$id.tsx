@@ -40,11 +40,11 @@ function MeterDetail() {
         <TabsList className="bg-surface">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="readings">Readings</TabsTrigger>
+          <TabsTrigger value="hierarchy">Hierarchy</TabsTrigger>
+          <TabsTrigger value="assignment">Consumer Assignment</TabsTrigger>
           <TabsTrigger value="comms">Communication Logs</TabsTrigger>
           <TabsTrigger value="alerts">Alerts</TabsTrigger>
-          <TabsTrigger value="lifecycle">Lifecycle</TabsTrigger>
-          <TabsTrigger value="topology">Topology</TabsTrigger>
-          <TabsTrigger value="audit">Audit</TabsTrigger>
+          <TabsTrigger value="audit">Audit Logs</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="mt-4">
