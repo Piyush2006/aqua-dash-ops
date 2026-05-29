@@ -68,7 +68,7 @@ export function ReadCycleBuilderDialog({ trigger, initial, mode = "create" }: { 
       <DialogContent className="max-w-5xl p-0">
         <DialogHeader className="border-b px-6 py-4">
           <DialogTitle className="flex items-center gap-2">
-            <Gauge className="h-5 w-5 text-primary" /> Meter Read Cycle Builder
+            <Gauge className="h-5 w-5 text-primary" /> {isEdit ? `Edit Read Cycle${initial?.name ? ` — ${initial.name}` : ""}` : "Meter Read Cycle Builder"}
           </DialogTitle>
           <DialogDescription>Group meters and define when reads are collected. No billing logic.</DialogDescription>
         </DialogHeader>
