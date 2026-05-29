@@ -52,21 +52,27 @@ const initialVersions: Version[] = [
 
 type Model = "flat" | "slab" | "tou" | "seasonal" | "hybrid";
 
-export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
+export type TariffInitial = Partial<{
+  name: string; code: string; category: string; status: string;
+  effFrom: string; effTo: string; description: string; model: Model;
+}>;
+
+export function TariffBuilderDialog({ trigger, initial, mode = "create" }: { trigger: ReactNode; initial?: TariffInitial; mode?: "create" | "edit" }) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState("basic");
+  const isEdit = mode === "edit";
 
   // Basic
-  const [name, setName] = useState("");
-  const [code, setCode] = useState("");
-  const [category, setCategory] = useState("Residential");
-  const [effFrom, setEffFrom] = useState("");
-  const [effTo, setEffTo] = useState("");
-  const [status, setStatus] = useState("Draft");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState(initial?.name ?? "");
+  const [code, setCode] = useState(initial?.code ?? "");
+  const [category, setCategory] = useState(initial?.category ?? "Residential");
+  const [effFrom, setEffFrom] = useState(initial?.effFrom ?? "");
+  const [effTo, setEffTo] = useState(initial?.effTo ?? "");
+  const [status, setStatus] = useState(initial?.status ?? "Draft");
+  const [description, setDescription] = useState(initial?.description ?? "");
 
   // Pricing
-  const [model, setModel] = useState<Model>("slab");
+  const [model, setModel] = useState<Model>(initial?.model ?? "slab");
   const [flatRate, setFlatRate] = useState(7);
   const [slabs, setSlabs] = useState<Slab[]>(initialSlabs);
 
