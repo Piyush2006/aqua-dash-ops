@@ -3,11 +3,14 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
-    "preview": "vite preview",
+    "build": "bash -c 'unset npm_config_prefix PREFIX; [ -s \"$HOME/.nvm/nvm.sh\" ] && . \"$HOME/.nvm/nvm.sh\" --no-use && nvm use 22 >/dev/null 2>&1; exec node node_modules/vite/bin/vite.js build'",
+    "build:dev": "bash -c 'unset npm_config_prefix PREFIX; [ -s \"$HOME/.nvm/nvm.sh\" ] && . \"$HOME/.nvm/nvm.sh\" --no-use && nvm use 22 >/dev/null 2>&1; exec node node_modules/vite/bin/vite.js build --mode development'",
+    "preview": "bash -c 'unset npm_config_prefix PREFIX; [ -s \"$HOME/.nvm/nvm.sh\" ] && . \"$HOME/.nvm/nvm.sh\" --no-use && nvm use 22 >/dev/null 2>&1; exec node node_modules/vite/bin/vite.js preview --host --port ${PORT:-4173}'",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
