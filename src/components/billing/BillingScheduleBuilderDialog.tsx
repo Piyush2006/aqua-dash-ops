@@ -66,7 +66,7 @@ export function BillingScheduleBuilderDialog({ trigger, initial, mode = "create"
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="max-w-5xl p-0">
         <DialogHeader className="border-b px-6 py-4">
-          <DialogTitle className="flex items-center gap-2"><Receipt className="h-5 w-5 text-primary" /> Billing Schedule Builder</DialogTitle>
+          <DialogTitle className="flex items-center gap-2"><Receipt className="h-5 w-5 text-primary" /> {isEdit ? `Edit Schedule${initial?.name ? ` — ${initial.name}` : ""}` : "Billing Schedule Builder"}</DialogTitle>
           <DialogDescription>Generate bills using consumption from a selected billing period.</DialogDescription>
         </DialogHeader>
 
