@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Battery, BatteryLow, Wifi, Plus } from "lucide-react";
 import { meters, townships, Meter } from "@/mocks/data";
 import { toast } from "sonner";
-import { FormDialog } from "@/components/ui/form-dialog";
+import { MeterOnboardingDialog } from "@/components/meters/MeterOnboardingDialog";
 
 export const Route = createFileRoute("/_app/meters/")({ component: MetersList });
 
@@ -42,18 +42,8 @@ function MetersList() {
         actions={
           <>
             <Button variant="outline" size="sm" onClick={() => toast.success("Reads CSV upload accepted")}>Upload reads</Button>
-            <FormDialog
+            <MeterOnboardingDialog
               trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> Add meter</Button>}
-              title="Onboard a new meter"
-              description="Register a new IoT meter into the fleet."
-              successMessage="Meter onboarded successfully"
-              fields={[
-                { name: "serial", label: "Serial number", required: true, placeholder: "e.g. KM-2025-09812" },
-                { name: "type", label: "Type", type: "select", required: true, options: ["Residential", "Commercial", "Industrial", "Bulk"] },
-                { name: "township", label: "Township", type: "select", required: true, options: townships.map((t) => t.name) },
-                { name: "flat", label: "Flat / location", required: true, placeholder: "e.g. A-1204" },
-                { name: "connectivity", label: "Connectivity", type: "select", required: true, options: ["LoRaWAN", "NB-IoT", "GSM", "WiFi"] },
-              ]}
             />
           </>
         }
