@@ -50,6 +50,22 @@ const initialVersions: Version[] = [
   { version: "v1.0", effectiveDate: "2024-01-01", createdBy: "S. Mehra", status: "Archived" },
 ];
 
+type RateEdit = {
+  date: string; time: string; version: string;
+  editor: string; role: string;
+  field: string; scope: string;
+  oldRate: number; newRate: number;
+};
+const rateEditLog: RateEdit[] = [
+  { date: "2026-01-12", time: "09:42", version: "v3.0", editor: "Anita Rao", role: "Tariff Manager", field: "Slab 3 rate", scope: "21+ KL · Residential", oldRate: 11.00, newRate: 12.00 },
+  { date: "2026-01-12", time: "09:38", version: "v3.0", editor: "Anita Rao", role: "Tariff Manager", field: "Slab 2 rate", scope: "11–20 KL · Residential", oldRate: 7.50, newRate: 8.00 },
+  { date: "2026-01-12", time: "09:31", version: "v3.0", editor: "Anita Rao", role: "Tariff Manager", field: "Fixed monthly", scope: "Charges · Recurring", oldRate: 120.00, newRate: 150.00 },
+  { date: "2025-07-01", time: "16:20", version: "v2.1", editor: "Karthik Iyer", role: "Pricing Analyst", field: "Slab 1 rate", scope: "0–10 KL · Residential", oldRate: 5.50, newRate: 5.00 },
+  { date: "2025-07-01", time: "16:18", version: "v2.1", editor: "Karthik Iyer", role: "Pricing Analyst", field: "Peak rate", scope: "TOU · 18:00–22:00", oldRate: 14.00, newRate: 15.00 },
+  { date: "2025-01-05", time: "11:02", version: "v2.0", editor: "Karthik Iyer", role: "Pricing Analyst", field: "Meter rent", scope: "Charges · Recurring", oldRate: 35.00, newRate: 40.00 },
+  { date: "2024-06-14", time: "10:15", version: "v1.0", editor: "S. Mehra", role: "Admin", field: "Flat rate", scope: "All slabs · Initial", oldRate: 6.00, newRate: 5.50 },
+];
+
 type Model = "flat" | "slab" | "tou" | "seasonal" | "hybrid";
 
 export type TariffInitial = Partial<{
@@ -484,21 +500,59 @@ export function TariffBuilderDialog({ trigger, initial, mode = "create" }: { tri
 
             {/* HISTORY */}
             <TabsContent value="history" className="mt-0 space-y-5">
-              <div className="rounded-lg border">
-                <GridHeader cols={["Version", "Effective", "Created by", "Status", "Actions"]} colsTemplate="1fr 1.2fr 1.5fr 1.2fr 1.6fr" />
-                {initialVersions.map((v) => (
-                  <div key={v.version} className="grid grid-cols-[1fr_1.2fr_1.5fr_1.2fr_1.6fr] gap-2 px-4 py-2.5 border-b last:border-b-0 items-center">
-                    <span className="font-mono text-xs font-medium">{v.version}</span>
-                    <span className="text-sm">{v.effectiveDate}</span>
-                    <span className="text-sm">{v.createdBy}</span>
-                    <StatusBadge status={v.status} dot />
-                    <div className="flex gap-1 justify-end">
-                      <Button variant="ghost" size="sm" onClick={() => toast.success(`Cloned ${v.version}`)}><Copy className="h-3.5 w-3.5 mr-1" />Clone</Button>
-                      <Button variant="ghost" size="sm" onClick={() => toast.success(`Activated ${v.version}`)}><CheckCircle2 className="h-3.5 w-3.5 mr-1" />Activate</Button>
-                      <Button variant="ghost" size="sm" onClick={() => toast.success(`Archived ${v.version}`)}><Archive className="h-3.5 w-3.5 mr-1" />Archive</Button>
+              <div>
+                <SectionTitle>Rate edit log</SectionTitle>
+                <p className="text-xs text-muted-foreground mt-0.5">Chronological record of every rate, slab and charge change made to this tariff.</p>
+              </div>
+
+              <div className="rounded-lg border overflow-hidden">
+                <GridHeader cols={["When", "Editor", "Field", "Previous", "Updated", "Δ Change"]} colsTemplate="1.3fr 1.2fr 1.6fr 1fr 1fr 0.9fr" />
+                {rateEditLog.map((e, i) => {
+                  const diff = e.newRate - e.oldRate;
+                  const pct = e.oldRate ? (diff / e.oldRate) * 100 : 0;
+                  const up = diff > 0;
+                  return (
+                    <div key={i} className="grid grid-cols-[1.3fr_1.2fr_1.6fr_1fr_1fr_0.9fr] gap-2 px-4 py-2.5 border-b last:border-b-0 items-center text-sm">
+                      <div>
+                        <p className="font-medium">{e.date}</p>
+                        <p className="text-xs text-muted-foreground">{e.time} · {e.version}</p>
+                      </div>
+                      <div>
+                        <p className="font-medium">{e.editor}</p>
+                        <p className="text-xs text-muted-foreground">{e.role}</p>
+                      </div>
+                      <div>
+                        <p className="font-medium">{e.field}</p>
+                        <p className="text-xs text-muted-foreground">{e.scope}</p>
+                      </div>
+                      <span className="tabular-nums text-muted-foreground line-through">₹{e.oldRate.toFixed(2)}</span>
+                      <span className="tabular-nums font-semibold text-foreground">₹{e.newRate.toFixed(2)}</span>
+                      <span className={`tabular-nums text-xs font-medium rounded-md px-2 py-0.5 w-fit ${up ? "bg-critical-soft text-critical" : "bg-success-soft text-success"}`}>
+                        {up ? "▲" : "▼"} {Math.abs(pct).toFixed(1)}%
+                      </span>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
+              </div>
+
+              <div>
+                <SectionTitle>Version timeline</SectionTitle>
+                <div className="rounded-lg border mt-2">
+                  <GridHeader cols={["Version", "Effective", "Created by", "Status", "Actions"]} colsTemplate="1fr 1.2fr 1.5fr 1.2fr 1.6fr" />
+                  {initialVersions.map((v) => (
+                    <div key={v.version} className="grid grid-cols-[1fr_1.2fr_1.5fr_1.2fr_1.6fr] gap-2 px-4 py-2.5 border-b last:border-b-0 items-center">
+                      <span className="font-mono text-xs font-medium">{v.version}</span>
+                      <span className="text-sm">{v.effectiveDate}</span>
+                      <span className="text-sm">{v.createdBy}</span>
+                      <StatusBadge status={v.status} dot />
+                      <div className="flex gap-1 justify-end">
+                        <Button variant="ghost" size="sm" onClick={() => toast.success(`Cloned ${v.version}`)}><Copy className="h-3.5 w-3.5 mr-1" />Clone</Button>
+                        <Button variant="ghost" size="sm" onClick={() => toast.success(`Activated ${v.version}`)}><CheckCircle2 className="h-3.5 w-3.5 mr-1" />Activate</Button>
+                        <Button variant="ghost" size="sm" onClick={() => toast.success(`Archived ${v.version}`)}><Archive className="h-3.5 w-3.5 mr-1" />Archive</Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="rounded-lg border p-4">
