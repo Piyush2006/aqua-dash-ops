@@ -22,7 +22,14 @@ function Page() {
     { key: "nextRun", header: "Next Run", accessor: (r) => <span className="font-medium">{r.nextRun}</span> },
     { key: "status", header: "Status", accessor: (r) => <StatusBadge status={r.status} dot /> },
     { key: "actions", header: "", accessor: (r) => (
-      <Button size="sm" variant="outline" className="h-7" onClick={(e) => { e.stopPropagation(); toast.success(`${r.name} triggered`); }}><Play className="mr-1 h-3 w-3" /> Run now</Button>
+      <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+        <ReadCycleBuilderDialog
+          mode="edit"
+          initial={{ name: r.name, code: r.id, active: r.status === "Active" }}
+          trigger={<Button size="sm" variant="ghost" className="h-7 px-2"><Pencil className="mr-1 h-3 w-3" /> Edit</Button>}
+        />
+        <Button size="sm" variant="outline" className="h-7" onClick={() => toast.success(`${r.name} triggered`)}><Play className="mr-1 h-3 w-3" /> Run now</Button>
+      </div>
     ) },
   ];
   return (
