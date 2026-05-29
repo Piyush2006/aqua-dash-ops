@@ -57,7 +57,7 @@ export function BillingScheduleBuilderDialog({ trigger, initial, mode = "create"
 
   const save = (draft?: boolean) => {
     if (!name) { toast.error("Schedule name required"); setTab("basic"); return; }
-    toast.success(draft ? "Schedule saved as draft" : `Billing schedule ${name} scheduled for ${genDate}`);
+    toast.success(draft ? "Schedule saved as draft" : isEdit ? `Billing schedule ${name} updated` : `Billing schedule ${name} scheduled for ${genDate}`);
     setOpen(false);
   };
 
