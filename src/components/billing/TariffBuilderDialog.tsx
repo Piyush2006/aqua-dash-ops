@@ -50,7 +50,7 @@ const initialVersions: Version[] = [
   { version: "v1.0", effectiveDate: "2024-01-01", createdBy: "S. Mehra", status: "Archived" },
 ];
 
-type Model = "flat" | "slab" | "tou" | "hybrid";
+type Model = "flat" | "slab" | "tou" | "seasonal" | "hybrid";
 
 export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
   const [open, setOpen] = useState(false);
