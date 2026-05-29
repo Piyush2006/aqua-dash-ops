@@ -5,7 +5,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { tariffsList, Tariff, formatNumber } from "@/mocks/data";
-import { FormDialog } from "@/components/ui/form-dialog";
+import { TariffBuilderDialog } from "@/components/billing/TariffBuilderDialog";
 
 export const Route = createFileRoute("/_app/billing/tariffs")({ component: Page });
 
@@ -22,18 +22,7 @@ function Page() {
   return (
     <>
       <PageHeader title="Tariffs" description="Pricing plans and approval lifecycle" actions={
-        <FormDialog
-          trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> New tariff</Button>}
-          title="Create new tariff"
-          description="Define a new pricing plan. It will enter draft and require approval."
-          successMessage="New tariff draft created"
-          fields={[
-            { name: "name", label: "Tariff name", required: true, placeholder: "e.g. Residential Slab 2026" },
-            { name: "type", label: "Type", type: "select", required: true, options: ["Residential", "Commercial", "Industrial", "Bulk"] },
-            { name: "effective", label: "Effective from", type: "date", required: true },
-            { name: "notes", label: "Notes", type: "textarea", placeholder: "Approval context, rationale..." },
-          ]}
-        />
+        <TariffBuilderDialog trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> New tariff</Button>} />
       } />
       <DataTable data={tariffsList} columns={cols} rowKey={(r) => r.id} searchKeys={["name", "type"]} />
     </>
