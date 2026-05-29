@@ -203,7 +203,7 @@ export function BillingScheduleBuilderDialog({ trigger, initial, mode = "create"
                 {!isLast ? (
                   <Button onClick={() => setTab(visible[idx + 1])}>Continue</Button>
                 ) : (
-                  <Button onClick={() => save(false)}><IndianRupee className="mr-1.5 h-4 w-4" /> Schedule Billing</Button>
+                  <Button onClick={() => save(false)}><IndianRupee className="mr-1.5 h-4 w-4" /> {isEdit ? "Save Changes" : "Schedule Billing"}</Button>
                 )}
               </div>
             </DialogFooter>
