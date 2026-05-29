@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { DataTable, Column } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
-import { Plus, Play } from "lucide-react";
+import { Plus, Play, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { BillingScheduleBuilderDialog } from "@/components/billing/BillingScheduleBuilderDialog";
 
