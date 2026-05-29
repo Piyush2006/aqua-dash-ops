@@ -4,8 +4,8 @@ import { KpiCard } from "@/components/ui/kpi-card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { TrendLine } from "@/components/charts";
-import { meters, townships, customerConsumption, alerts, auditLog } from "@/mocks/data";
-import { ArrowLeft, Battery, Wifi, Activity, Signal } from "lucide-react";
+import { meters, townships, customerConsumption, alerts, auditLog, customers } from "@/mocks/data";
+import { ArrowLeft, Battery, Wifi, Activity, Signal, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_app/meters/$id")({ component: MeterDetail });
