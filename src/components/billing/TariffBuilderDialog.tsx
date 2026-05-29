@@ -50,6 +50,22 @@ const initialVersions: Version[] = [
   { version: "v1.0", effectiveDate: "2024-01-01", createdBy: "S. Mehra", status: "Archived" },
 ];
 
+type RateEdit = {
+  date: string; time: string; version: string;
+  editor: string; role: string;
+  field: string; scope: string;
+  oldRate: number; newRate: number;
+};
+const rateEditLog: RateEdit[] = [
+  { date: "2026-01-12", time: "09:42", version: "v3.0", editor: "Anita Rao", role: "Tariff Manager", field: "Slab 3 rate", scope: "21+ KL · Residential", oldRate: 11.00, newRate: 12.00 },
+  { date: "2026-01-12", time: "09:38", version: "v3.0", editor: "Anita Rao", role: "Tariff Manager", field: "Slab 2 rate", scope: "11–20 KL · Residential", oldRate: 7.50, newRate: 8.00 },
+  { date: "2026-01-12", time: "09:31", version: "v3.0", editor: "Anita Rao", role: "Tariff Manager", field: "Fixed monthly", scope: "Charges · Recurring", oldRate: 120.00, newRate: 150.00 },
+  { date: "2025-07-01", time: "16:20", version: "v2.1", editor: "Karthik Iyer", role: "Pricing Analyst", field: "Slab 1 rate", scope: "0–10 KL · Residential", oldRate: 5.50, newRate: 5.00 },
+  { date: "2025-07-01", time: "16:18", version: "v2.1", editor: "Karthik Iyer", role: "Pricing Analyst", field: "Peak rate", scope: "TOU · 18:00–22:00", oldRate: 14.00, newRate: 15.00 },
+  { date: "2025-01-05", time: "11:02", version: "v2.0", editor: "Karthik Iyer", role: "Pricing Analyst", field: "Meter rent", scope: "Charges · Recurring", oldRate: 35.00, newRate: 40.00 },
+  { date: "2024-06-14", time: "10:15", version: "v1.0", editor: "S. Mehra", role: "Admin", field: "Flat rate", scope: "All slabs · Initial", oldRate: 6.00, newRate: 5.50 },
+];
+
 type Model = "flat" | "slab" | "tou" | "seasonal" | "hybrid";
 
 export type TariffInitial = Partial<{
