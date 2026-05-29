@@ -184,10 +184,25 @@ export function BillingScheduleBuilderDialog({ trigger }: { trigger: ReactNode }
           </Tabs>
         </div>
 
-        <DialogFooter className="border-t bg-muted/30 px-6 py-3">
-          <Button variant="outline" onClick={() => save(true)}>Save Draft</Button>
-          <Button onClick={() => save(false)}><IndianRupee className="mr-1.5 h-4 w-4" /> Schedule Billing</Button>
-        </DialogFooter>
+        {(() => {
+          const visible = ["basic", "customers", "period", "generation", "preview"];
+          const idx = Math.max(0, visible.indexOf(tab));
+          const isLast = idx === visible.length - 1;
+          return (
+            <DialogFooter className="border-t bg-muted/30 px-6 py-3 flex items-center justify-between sm:justify-between gap-2">
+              <Button variant="outline" onClick={() => save(true)}>Save Draft</Button>
+              <p className="text-xs text-muted-foreground">Step {idx + 1} of {visible.length}</p>
+              <div className="flex gap-2">
+                <Button variant="outline" onClick={() => setTab(visible[idx - 1])} disabled={idx === 0}>Back</Button>
+                {!isLast ? (
+                  <Button onClick={() => setTab(visible[idx + 1])}>Continue</Button>
+                ) : (
+                  <Button onClick={() => save(false)}><IndianRupee className="mr-1.5 h-4 w-4" /> Schedule Billing</Button>
+                )}
+              </div>
+            </DialogFooter>
+          );
+        })()}
       </DialogContent>
     </Dialog>
   );
