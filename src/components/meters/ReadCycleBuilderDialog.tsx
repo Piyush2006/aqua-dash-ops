@@ -19,15 +19,18 @@ type Scope = "township" | "block" | "cluster" | "individual";
 type ScheduleType = "daily" | "weekly" | "monthly" | "custom";
 type Method = "iot" | "manual" | "csv" | "api";
 
-export function ReadCycleBuilderDialog({ trigger }: { trigger: ReactNode }) {
+export type ReadCycleInitial = Partial<{ name: string; code: string; desc: string; active: boolean }>;
+
+export function ReadCycleBuilderDialog({ trigger, initial, mode = "create" }: { trigger: ReactNode; initial?: ReadCycleInitial; mode?: "create" | "edit" }) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState("basic");
+  const isEdit = mode === "edit";
 
   // Basic
-  const [name, setName] = useState("");
-  const [code, setCode] = useState("");
-  const [desc, setDesc] = useState("");
-  const [active, setActive] = useState(true);
+  const [name, setName] = useState(initial?.name ?? "");
+  const [code, setCode] = useState(initial?.code ?? "");
+  const [desc, setDesc] = useState(initial?.desc ?? "");
+  const [active, setActive] = useState(initial?.active ?? true);
 
   // Selection
   const [scope, setScope] = useState<Scope>("township");
