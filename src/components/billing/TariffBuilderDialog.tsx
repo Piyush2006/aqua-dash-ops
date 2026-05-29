@@ -548,7 +548,7 @@ export function TariffBuilderDialog({ trigger, initial, mode = "create" }: { tri
                 {!isLast ? (
                   <Button onClick={() => setTab(visible[idx + 1])}>Continue</Button>
                 ) : (
-                  <Button onClick={submit}><CheckCircle2 className="mr-1.5 h-4 w-4" /> Submit for Approval</Button>
+                  <Button onClick={submit}><CheckCircle2 className="mr-1.5 h-4 w-4" /> {isEdit ? "Save Changes" : "Submit for Approval"}</Button>
                 )}
               </div>
             </DialogFooter>
