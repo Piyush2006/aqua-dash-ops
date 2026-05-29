@@ -3,14 +3,16 @@ import { PageHeader } from "@/components/ui/page-header";
 import { DataTable, Column } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
-import { Play, Plus } from "lucide-react";
+import { Play, Plus, Gauge } from "lucide-react";
 import { readCycles, formatNumber } from "@/mocks/data";
 import { toast } from "sonner";
-import { FormDialog } from "@/components/ui/form-dialog";
+import { KpiCard } from "@/components/ui/kpi-card";
+import { ReadCycleBuilderDialog } from "@/components/meters/ReadCycleBuilderDialog";
 
 export const Route = createFileRoute("/_app/meters/read-cycles")({ component: Page });
 
 function Page() {
+  const totalMeters = readCycles.reduce((a, c) => a + c.meters, 0);
   const cols: Column<typeof readCycles[number]>[] = [
     { key: "id", header: "Cycle", accessor: (r) => <span className="font-mono text-xs">{r.id}</span> },
     { key: "name", header: "Name", accessor: (r) => <span className="font-medium">{r.name}</span>, sortValue: (r) => r.name },
@@ -25,19 +27,18 @@ function Page() {
   ];
   return (
     <>
-      <PageHeader title="Read Cycles" description="Scheduled meter read jobs across the fleet" actions={
-        <FormDialog
-          trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> New cycle</Button>}
-          title="New read cycle"
-          successMessage="New cycle drafted"
-          fields={[
-            { name: "name", label: "Cycle name", required: true, placeholder: "e.g. Daily Industrial Reads" },
-            { name: "frequency", label: "Frequency", type: "select", required: true, options: ["Hourly", "Daily", "Weekly", "Monthly"] },
-            { name: "scope", label: "Meter scope", type: "select", required: true, options: ["All meters", "Residential", "Commercial", "Industrial", "Bulk"] },
-            { name: "startTime", label: "Start time", placeholder: "23:00", required: true },
-          ]}
-        />
+      <PageHeader title="Meter Read Cycles" description="Group meters and schedule reading collection" actions={
+        <ReadCycleBuilderDialog trigger={<Button size="sm"><Plus className="mr-1.5 h-4 w-4" /> New cycle</Button>} />
       } />
+
+      <div className="mb-4 grid grid-cols-2 gap-3 md:grid-cols-5">
+        <KpiCard label="Total Meters" value={formatNumber(totalMeters)} icon={Gauge} />
+        <KpiCard label="Scheduled Reads" value={formatNumber(totalMeters)} />
+        <KpiCard variant="success" label="Completed" value={formatNumber(Math.round(totalMeters * 0.94))} />
+        <KpiCard label="Pending" value={formatNumber(Math.round(totalMeters * 0.05))} />
+        <KpiCard label="Failed" value={formatNumber(Math.round(totalMeters * 0.01))} />
+      </div>
+
       <DataTable data={readCycles} columns={cols} rowKey={(r) => r.id} />
     </>
   );
