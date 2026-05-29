@@ -1,4 +1,4 @@
-import { useMemo, useState, ReactNode } from "react";
+import { useEffect, useMemo, useState, ReactNode } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -50,7 +50,7 @@ const initialVersions: Version[] = [
   { version: "v1.0", effectiveDate: "2024-01-01", createdBy: "S. Mehra", status: "Archived" },
 ];
 
-type Model = "flat" | "slab" | "tou" | "hybrid";
+type Model = "flat" | "slab" | "tou" | "seasonal" | "hybrid";
 
 export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -131,6 +131,11 @@ export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
   const taxes = (clamped * taxRate) / 100;
   const finalBill = clamped + taxes;
 
+  useEffect(() => {
+    if (tab === "time" && !(model === "tou" || model === "hybrid")) setTab("pricing");
+    if (tab === "seasonal" && !(model === "seasonal" || model === "hybrid")) setTab("pricing");
+  }, [model, tab]);
+
   const reset = () => {
     setTab("basic");
   };
@@ -166,15 +171,15 @@ export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
         <Tabs value={tab} onValueChange={setTab} className="flex-1 flex flex-col min-h-0">
           <div className="px-6 pt-3 border-b">
             <TabsList className="h-9 bg-transparent p-0 gap-1">
-              {[
-                ["basic", "Basic Details"],
-                ["pricing", "Pricing Rules"],
-                ["time", "Time Rules"],
-                ["seasonal", "Seasonal Rules"],
-                ["charges", "Charges"],
-                ["sim", "Simulation"],
-                ["history", "Version History"],
-              ].map(([v, l]) => (
+              {([
+                ["basic", "Basic Details", true],
+                ["pricing", "Pricing Rules", true],
+                ["time", "Time Rules", model === "tou" || model === "hybrid"],
+                ["seasonal", "Seasonal Rules", model === "seasonal" || model === "hybrid"],
+                ["charges", "Charges", true],
+                ["sim", "Simulation", true],
+                ["history", "Version History", true],
+              ] as const).filter(([, , show]) => show).map(([v, l]) => (
                 <TabsTrigger key={v} value={v} className="data-[state=active]:bg-muted">{l}</TabsTrigger>
               ))}
             </TabsList>
@@ -222,11 +227,12 @@ export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
             {/* PRICING */}
             <TabsContent value="pricing" className="mt-0 space-y-5">
               <SectionTitle>Pricing model</SectionTitle>
-              <RadioGroup value={model} onValueChange={(v) => setModel(v as Model)} className="grid grid-cols-4 gap-3">
+              <RadioGroup value={model} onValueChange={(v) => setModel(v as Model)} className="grid grid-cols-5 gap-3">
                 {[
                   { v: "flat", t: "Flat Rate", d: "Single rate per KL" },
                   { v: "slab", t: "Tiered / Slab", d: "Block pricing by usage" },
                   { v: "tou", t: "Time of Use", d: "Hourly band pricing" },
+                  { v: "seasonal", t: "Seasonal", d: "Rates by season window" },
                   { v: "hybrid", t: "Hybrid", d: "Slab + time + season" },
                 ].map((m) => (
                   <label key={m.v} htmlFor={`m-${m.v}`} className={`cursor-pointer rounded-lg border p-3 transition ${model === m.v ? "border-primary bg-primary/5" : "hover:bg-muted/50"}`}>
@@ -271,7 +277,24 @@ export function TariffBuilderDialog({ trigger }: { trigger: ReactNode }) {
               )}
 
               {model === "tou" && (
-                <p className="text-sm text-muted-foreground">Configure time bands in the <button className="text-primary underline-offset-2 hover:underline" onClick={() => setTab("time")}>Time Rules</button> tab.</p>
+                <div className="rounded-lg border bg-info-soft/40 p-4 text-sm text-muted-foreground flex items-start gap-2">
+                  <AlertCircle className="h-4 w-4 mt-0.5 text-info" />
+                  <span>Configure hourly bands and peak windows in the <button className="text-primary font-medium underline-offset-2 hover:underline" onClick={() => setTab("time")}>Time Rules</button> tab.</span>
+                </div>
+              )}
+
+              {model === "seasonal" && (
+                <div className="rounded-lg border bg-info-soft/40 p-4 text-sm text-muted-foreground flex items-start gap-2">
+                  <AlertCircle className="h-4 w-4 mt-0.5 text-info" />
+                  <span>Define season windows and rates in the <button className="text-primary font-medium underline-offset-2 hover:underline" onClick={() => setTab("seasonal")}>Seasonal Rules</button> tab.</span>
+                </div>
+              )}
+
+              {model === "hybrid" && (
+                <div className="rounded-lg border bg-info-soft/40 p-4 text-sm text-muted-foreground flex items-start gap-2">
+                  <AlertCircle className="h-4 w-4 mt-0.5 text-info" />
+                  <span>Hybrid combines slabs above with <button className="text-primary font-medium underline-offset-2 hover:underline" onClick={() => setTab("time")}>Time Rules</button> and <button className="text-primary font-medium underline-offset-2 hover:underline" onClick={() => setTab("seasonal")}>Seasonal Rules</button>.</span>
+                </div>
               )}
             </TabsContent>
 
