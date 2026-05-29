@@ -152,7 +152,7 @@ export function TariffBuilderDialog({ trigger, initial, mode = "create" }: { tri
       setTab("basic");
       return;
     }
-    toast.success(`Tariff “${name}” created as Draft (v1.0)`);
+    toast.success(isEdit ? `Tariff “${name}” updated` : `Tariff “${name}” created as Draft (v1.0)`);
     setOpen(false);
     reset();
   };
@@ -166,7 +166,7 @@ export function TariffBuilderDialog({ trigger, initial, mode = "create" }: { tri
             <div>
               <DialogTitle className="flex items-center gap-2 text-lg">
                 <Calculator className="h-5 w-5 text-primary" />
-                Tariff Builder
+                {isEdit ? `Edit Tariff${initial?.name ? ` — ${initial.name}` : ""}` : "Tariff Builder"}
               </DialogTitle>
               <DialogDescription>Configure pricing rules, charges and approval workflow for a utility tariff plan.</DialogDescription>
             </div>
