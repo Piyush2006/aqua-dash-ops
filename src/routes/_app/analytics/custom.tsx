@@ -4,6 +4,34 @@ import { Button } from "@/components/ui/button";
 import { Plus, FileText, Download } from "lucide-react";
 import { toast } from "sonner";
 import { FormDialog } from "@/components/ui/form-dialog";
+import { downloadPdfReport } from "@/lib/pdf-report";
+import { revenueTrend, townshipComparison, outstandingAging, formatCurrency } from "@/mocks/data";
+
+function buildReportPayload(name: string, id: string, schedule: string) {
+  return {
+    title: name,
+    subtitle: "AquaOps Smart Utility Platform",
+    meta: { "Report ID": id, "Schedule": schedule, "Generated": new Date().toLocaleString("en-IN") },
+    sections: [
+      { heading: "Executive Summary", paragraph: `${name} consolidates the latest operational and financial signals across all townships in scope. Key trends, outliers and recommended actions are summarised below.` },
+      { heading: "Revenue Snapshot", table: {
+        head: ["Month", "Billed (₹ Cr)", "Collected (₹ Cr)", "Outstanding (₹ Cr)"],
+        body: revenueTrend.slice(-6).map((r) => [r.month, r.revenue.toFixed(2), r.collected.toFixed(2), r.outstanding.toFixed(2)]),
+      } },
+      { heading: "Township Comparison", table: {
+        head: ["Township", "Revenue (₹ L)", "Consumption (KL)"],
+        body: townshipComparison.map((t) => [t.name, t.revenue, t.consumption]),
+      } },
+      { heading: "Outstanding Aging", table: {
+        head: ["Bucket", "Amount (₹ L)"],
+        body: outstandingAging.map((a) => [a.bucket, a.amount]),
+      } },
+      { heading: "Notes", paragraph: `Total outstanding currently stands at ${formatCurrency(3_84_12_500)} with a 5.6% reduction MoM. Collection efficiency continues to trend above the 90% target.` },
+    ],
+    filename: `${id}_${name}`,
+  };
+}
+
 
 export const Route = createFileRoute("/_app/analytics/custom")({ component: Page });
 
