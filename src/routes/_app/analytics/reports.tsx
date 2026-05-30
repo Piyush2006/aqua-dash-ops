@@ -39,6 +39,12 @@ function Page() {
   const [format, setFormat] = useState<string>("PDF");
 
   const meta = useMemo(() => REPORTS.find((r) => r.key === report)!, [report]);
+  const townshipLabel = township === "all" ? "All townships" : townships.find((t) => t.id === township)?.name ?? "All townships";
+
+  const handleExport = () => {
+    downloadPdfReport(buildReportPayload(report, meta.label, meta.desc, townshipLabel, period));
+    toast.success(`${meta.label} downloaded as PDF`);
+  };
 
   return (
     <>
@@ -47,8 +53,8 @@ function Page() {
         description="Filter and render any operational, billing or analytics report on one screen."
         actions={
           <>
-            <Button variant="outline" size="sm" onClick={() => toast.success(`${meta.label} exported as ${format}`)}>
-              <Download className="mr-1.5 h-4 w-4" /> Export {format}
+            <Button variant="outline" size="sm" onClick={handleExport}>
+              <Download className="mr-1.5 h-4 w-4" /> Download PDF
             </Button>
             <Button size="sm" onClick={() => toast.success(`${meta.label} sent to recipients`)}>
               <FileText className="mr-1.5 h-4 w-4" /> Send now
@@ -56,6 +62,7 @@ function Page() {
           </>
         }
       />
+
 
       <div className="mb-6 rounded-xl border bg-card p-4 shadow-card">
         <div className="grid gap-3 md:grid-cols-4">
