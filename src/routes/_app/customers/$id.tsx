@@ -6,8 +6,9 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { TrendArea } from "@/components/charts";
 import { customers, townships, bills, payments, auditLog, customerConsumption, formatCurrency } from "@/mocks/data";
-import { ArrowLeft, Phone, Mail, MapPin, FileText, Download, Droplets, Gauge, IndianRupee, Calendar } from "lucide-react";
+import { ArrowLeft, Phone, Mail, MapPin, FileText, Download, Droplets, Gauge, IndianRupee, Calendar, Eye } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
+import { BillDetailDialog } from "@/components/billing/BillDetailDialog";
 
 export const Route = createFileRoute("/_app/customers/$id")({ component: CustomerDetail });
 
