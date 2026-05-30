@@ -39,6 +39,7 @@ import { Route as AppBillingCollectionsRouteImport } from './routes/_app/billing
 import { Route as AppBillingBillsRouteImport } from './routes/_app/billing/bills'
 import { Route as AppAnalyticsWaterLossRouteImport } from './routes/_app/analytics/water-loss'
 import { Route as AppAnalyticsRevenueRouteImport } from './routes/_app/analytics/revenue'
+import { Route as AppAnalyticsReportsRouteImport } from './routes/_app/analytics/reports'
 import { Route as AppAnalyticsMetersRouteImport } from './routes/_app/analytics/meters'
 import { Route as AppAnalyticsCustomRouteImport } from './routes/_app/analytics/custom'
 import { Route as AppAnalyticsConsumptionRouteImport } from './routes/_app/analytics/consumption'
@@ -200,6 +201,11 @@ const AppAnalyticsRevenueRoute = AppAnalyticsRevenueRouteImport.update({
   path: '/analytics/revenue',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAnalyticsReportsRoute = AppAnalyticsReportsRouteImport.update({
+  id: '/analytics/reports',
+  path: '/analytics/reports',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAnalyticsMetersRoute = AppAnalyticsMetersRouteImport.update({
   id: '/analytics/meters',
   path: '/analytics/meters',
@@ -265,6 +271,7 @@ export interface FileRoutesByFullPath {
   '/analytics/consumption': typeof AppAnalyticsConsumptionRoute
   '/analytics/custom': typeof AppAnalyticsCustomRoute
   '/analytics/meters': typeof AppAnalyticsMetersRoute
+  '/analytics/reports': typeof AppAnalyticsReportsRoute
   '/analytics/revenue': typeof AppAnalyticsRevenueRoute
   '/analytics/water-loss': typeof AppAnalyticsWaterLossRoute
   '/billing/bills': typeof AppBillingBillsRoute
@@ -306,6 +313,7 @@ export interface FileRoutesByTo {
   '/analytics/consumption': typeof AppAnalyticsConsumptionRoute
   '/analytics/custom': typeof AppAnalyticsCustomRoute
   '/analytics/meters': typeof AppAnalyticsMetersRoute
+  '/analytics/reports': typeof AppAnalyticsReportsRoute
   '/analytics/revenue': typeof AppAnalyticsRevenueRoute
   '/analytics/water-loss': typeof AppAnalyticsWaterLossRoute
   '/billing/bills': typeof AppBillingBillsRoute
@@ -349,6 +357,7 @@ export interface FileRoutesById {
   '/_app/analytics/consumption': typeof AppAnalyticsConsumptionRoute
   '/_app/analytics/custom': typeof AppAnalyticsCustomRoute
   '/_app/analytics/meters': typeof AppAnalyticsMetersRoute
+  '/_app/analytics/reports': typeof AppAnalyticsReportsRoute
   '/_app/analytics/revenue': typeof AppAnalyticsRevenueRoute
   '/_app/analytics/water-loss': typeof AppAnalyticsWaterLossRoute
   '/_app/billing/bills': typeof AppBillingBillsRoute
@@ -392,6 +401,7 @@ export interface FileRouteTypes {
     | '/analytics/consumption'
     | '/analytics/custom'
     | '/analytics/meters'
+    | '/analytics/reports'
     | '/analytics/revenue'
     | '/analytics/water-loss'
     | '/billing/bills'
@@ -433,6 +443,7 @@ export interface FileRouteTypes {
     | '/analytics/consumption'
     | '/analytics/custom'
     | '/analytics/meters'
+    | '/analytics/reports'
     | '/analytics/revenue'
     | '/analytics/water-loss'
     | '/billing/bills'
@@ -475,6 +486,7 @@ export interface FileRouteTypes {
     | '/_app/analytics/consumption'
     | '/_app/analytics/custom'
     | '/_app/analytics/meters'
+    | '/_app/analytics/reports'
     | '/_app/analytics/revenue'
     | '/_app/analytics/water-loss'
     | '/_app/billing/bills'
@@ -722,6 +734,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAnalyticsRevenueRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/analytics/reports': {
+      id: '/_app/analytics/reports'
+      path: '/analytics/reports'
+      fullPath: '/analytics/reports'
+      preLoaderRoute: typeof AppAnalyticsReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/analytics/meters': {
       id: '/_app/analytics/meters'
       path: '/analytics/meters'
@@ -806,6 +825,7 @@ interface AppRouteChildren {
   AppAnalyticsConsumptionRoute: typeof AppAnalyticsConsumptionRoute
   AppAnalyticsCustomRoute: typeof AppAnalyticsCustomRoute
   AppAnalyticsMetersRoute: typeof AppAnalyticsMetersRoute
+  AppAnalyticsReportsRoute: typeof AppAnalyticsReportsRoute
   AppAnalyticsRevenueRoute: typeof AppAnalyticsRevenueRoute
   AppAnalyticsWaterLossRoute: typeof AppAnalyticsWaterLossRoute
   AppBillingBillsRoute: typeof AppBillingBillsRoute
@@ -845,6 +865,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAnalyticsConsumptionRoute: AppAnalyticsConsumptionRoute,
   AppAnalyticsCustomRoute: AppAnalyticsCustomRoute,
   AppAnalyticsMetersRoute: AppAnalyticsMetersRoute,
+  AppAnalyticsReportsRoute: AppAnalyticsReportsRoute,
   AppAnalyticsRevenueRoute: AppAnalyticsRevenueRoute,
   AppAnalyticsWaterLossRoute: AppAnalyticsWaterLossRoute,
   AppBillingBillsRoute: AppBillingBillsRoute,
