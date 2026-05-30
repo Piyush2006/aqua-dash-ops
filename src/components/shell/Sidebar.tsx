@@ -35,9 +35,6 @@ const nav: Item[] = [
       { title: "Meters", to: "/meters" },
       { title: "Hierarchy", to: "/meters/hierarchy" },
       { title: "Read Cycles", to: "/meters/read-cycles" },
-      { title: "Read Exceptions", to: "/meters/read-exceptions" },
-      { title: "Alerts", to: "/meters/alerts" },
-      { title: "Meter Health", to: "/meters/health" },
     ],
   },
   {
@@ -51,13 +48,9 @@ const nav: Item[] = [
     ],
   },
   {
-    title: "Analytics", to: "/analytics/revenue", icon: BarChart3,
+    title: "Analytics", to: "/analytics/reports", icon: BarChart3,
     children: [
-      { title: "Revenue", to: "/analytics/revenue" },
-      { title: "Consumption", to: "/analytics/consumption" },
-      { title: "Water Loss", to: "/analytics/water-loss" },
-      { title: "Meter Reports", to: "/analytics/meters" },
-      { title: "Collections", to: "/analytics/collections" },
+      { title: "Reports", to: "/analytics/reports" },
       { title: "Custom Reports", to: "/analytics/custom" },
     ],
   },
