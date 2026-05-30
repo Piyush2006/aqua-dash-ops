@@ -4,6 +4,34 @@ import { Button } from "@/components/ui/button";
 import { Plus, FileText, Download } from "lucide-react";
 import { toast } from "sonner";
 import { FormDialog } from "@/components/ui/form-dialog";
+import { downloadPdfReport } from "@/lib/pdf-report";
+import { revenueTrend, townshipComparison, outstandingAging, formatCurrency } from "@/mocks/data";
+
+function buildReportPayload(name: string, id: string, schedule: string) {
+  return {
+    title: name,
+    subtitle: "AquaOps Smart Utility Platform",
+    meta: { "Report ID": id, "Schedule": schedule, "Generated": new Date().toLocaleString("en-IN") },
+    sections: [
+      { heading: "Executive Summary", paragraph: `${name} consolidates the latest operational and financial signals across all townships in scope. Key trends, outliers and recommended actions are summarised below.` },
+      { heading: "Revenue Snapshot", table: {
+        head: ["Month", "Billed (₹ Cr)", "Collected (₹ Cr)", "Outstanding (₹ Cr)"],
+        body: revenueTrend.slice(-6).map((r) => [r.month, r.revenue.toFixed(2), r.collected.toFixed(2), r.outstanding.toFixed(2)]),
+      } },
+      { heading: "Township Comparison", table: {
+        head: ["Township", "Revenue (₹ L)", "Consumption (KL)"],
+        body: townshipComparison.map((t) => [t.name, t.revenue, t.consumption]),
+      } },
+      { heading: "Outstanding Aging", table: {
+        head: ["Bucket", "Amount (₹ L)"],
+        body: outstandingAging.map((a) => [a.bucket, a.amount]),
+      } },
+      { heading: "Notes", paragraph: `Total outstanding currently stands at ${formatCurrency(3_84_12_500)} with a 5.6% reduction MoM. Collection efficiency continues to trend above the 90% target.` },
+    ],
+    filename: `${id}_${name}`,
+  };
+}
+
 
 export const Route = createFileRoute("/_app/analytics/custom")({ component: Page });
 
@@ -42,7 +70,7 @@ function Page() {
             <h3 className="font-semibold text-foreground">{r.name}</h3>
             <p className="mt-1 text-xs text-muted-foreground">{r.schedule} · {r.recipients} recipients</p>
             <div className="mt-4 flex gap-2">
-              <Button size="sm" variant="outline" className="flex-1" onClick={() => toast.success(`${r.name} downloaded`)}><Download className="mr-1 h-3.5 w-3.5" /> Download</Button>
+              <Button size="sm" variant="outline" className="flex-1" onClick={() => { downloadPdfReport(buildReportPayload(r.name, r.id, r.schedule)); toast.success(`${r.name} downloaded as PDF`); }}><Download className="mr-1 h-3.5 w-3.5" /> Download PDF</Button>
               <Button size="sm" variant="ghost" onClick={() => toast.success(`${r.name} sent`)}>Send now</Button>
             </div>
           </div>
