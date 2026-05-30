@@ -24,8 +24,6 @@ function useBreadcrumbs() {
 
 export function Topbar() {
   const crumbs = useBreadcrumbs();
-  const [tenant, setTenant] = useState(tenants[0].id);
-  const [township, setTownship] = useState("all");
   const unread = notifications.length;
   const openAlerts = alerts.filter((a) => a.status === "Open").length;
 
@@ -42,52 +40,10 @@ export function Topbar() {
           ))}
         </div>
 
-        <div className="relative ml-auto hidden w-72 md:block">
+        <div className="relative ml-auto hidden w-64 md:block">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input placeholder="Search customers, meters, bills..." className="h-9 pl-9 text-sm" />
-          <kbd className="pointer-events-none absolute right-2 top-1/2 hidden -translate-y-1/2 rounded border bg-surface px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline-block">⌘K</kbd>
+          <Input placeholder="Search..." className="h-9 pl-9 text-sm" />
         </div>
-
-        {/* Tenant selector */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="hidden gap-1.5 lg:flex">
-              <Building2 className="h-3.5 w-3.5" />
-              <span className="max-w-[120px] truncate text-xs">{tenants.find((t) => t.id === tenant)?.name}</span>
-              <ChevronDown className="h-3 w-3" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>Tenant</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {tenants.map((t) => (
-              <DropdownMenuItem key={t.id} onClick={() => setTenant(t.id)}>{t.name}</DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="hidden gap-1.5 lg:flex">
-              <span className="max-w-[140px] truncate text-xs">{township === "all" ? "All townships" : townships.find((t) => t.id === township)?.name}</span>
-              <ChevronDown className="h-3 w-3" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-64">
-            <DropdownMenuLabel>Township</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => setTownship("all")}>All townships</DropdownMenuItem>
-            {townships.map((t) => (
-              <DropdownMenuItem key={t.id} onClick={() => setTownship(t.id)}>{t.name}</DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <Button variant="outline" size="sm" className="hidden gap-1.5 lg:flex">
-          <Calendar className="h-3.5 w-3.5" />
-          <span className="text-xs">Last 30 days</span>
-          <ChevronDown className="h-3 w-3" />
-        </Button>
 
         {/* Alerts */}
         <Popover>
@@ -116,6 +72,7 @@ export function Topbar() {
             </div>
           </PopoverContent>
         </Popover>
+
 
         {/* Notifications */}
         <Popover>
