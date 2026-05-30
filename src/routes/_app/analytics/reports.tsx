@@ -31,6 +31,42 @@ const lossBreakdown = [
   { name: "Unauthorized Use", value: 2.1, color: "var(--color-accent)" },
   { name: "Authorized Unbilled", value: 1.5, color: "var(--color-muted-foreground)" },
 ];
+function buildReportPayload(key: ReportKey, label: string, desc: string, township: string, period: string) {
+  const meta = { "Township": township, "Period": period.toUpperCase(), "Generated": new Date().toLocaleString("en-IN") };
+  const common = { title: label, subtitle: desc, meta, filename: `${label}_${period}` };
+  if (key === "revenue") {
+    return { ...common, sections: [
+      { heading: "Summary", paragraph: `Total billed ${formatCurrency(48_72_30_000)} with ${formatCurrency(46_08_42_000)} collected (94.6% efficiency). Outstanding stands at ${formatCurrency(3_84_12_500)}.` },
+      { heading: "Billed vs Collected (last 6 months)", table: { head: ["Month", "Billed (₹ Cr)", "Collected (₹ Cr)", "Outstanding (₹ Cr)"], body: revenueTrend.slice(-6).map((r) => [r.month, r.revenue.toFixed(2), r.collected.toFixed(2), r.outstanding.toFixed(2)]) } },
+      { heading: "Township Comparison", table: { head: ["Township", "Revenue (₹ L)", "Consumption (KL)"], body: townshipComparison.map((t) => [t.name, t.revenue, t.consumption]) } },
+    ] };
+  }
+  if (key === "consumption") {
+    return { ...common, sections: [
+      { heading: "Summary", paragraph: `Total consumption ${formatNumber(28_45_120)} KL. Domestic 72%, Commercial 22%, Common 6%.` },
+      { heading: "Monthly Consumption", table: { head: ["Month", "Domestic (KL)", "Commercial (KL)", "Common (KL)"], body: consumptionTrend.map((r) => [r.month, r.domestic, r.commercial, r.common]) } },
+    ] };
+  }
+  if (key === "collections") {
+    return { ...common, sections: [
+      { heading: "Summary", paragraph: `Collection efficiency 94.6% (▲1.8%). Outstanding ${formatCurrency(3_84_12_500)} (▼5.6%).` },
+      { heading: "Efficiency Trend", table: { head: ["Month", "Efficiency %"], body: collectionEfficiencyTrend.map((r) => [r.month, r.efficiency.toFixed(2)]) } },
+      { heading: "Outstanding Aging", table: { head: ["Bucket", "Amount (₹ L)"], body: outstandingAging.map((a) => [a.bucket, a.amount]) } },
+    ] };
+  }
+  if (key === "water-loss") {
+    return { ...common, sections: [
+      { heading: "Summary", paragraph: "NRW at 14.8% (▼2.3%). Loss cost estimated at ₹62.4 L." },
+      { heading: "Loss Breakdown", table: { head: ["Category", "Loss %"], body: [["Physical Leakage", 6.4], ["Apparent (metering)", 4.8], ["Unauthorized Use", 2.1], ["Authorized Unbilled", 1.5]] } },
+    ] };
+  }
+  return { ...common, sections: [
+    { heading: "Summary", paragraph: "Active meters 18,204. Read success 97.8%. 287 faulty. Avg battery 78%." },
+    { heading: "Fleet Health", table: { head: ["Status", "Count"], body: meterHealth.map((m) => [m.name, m.value]) } },
+    { heading: "Read Success (last 14 days)", table: { head: ["Day", "Success %"], body: readSuccessTrend.map((r) => [r.day, r.success]) } },
+  ] };
+}
+
 
 function Page() {
   const [report, setReport] = useState<ReportKey>("revenue");
