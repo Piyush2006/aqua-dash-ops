@@ -70,7 +70,7 @@ function Page() {
             <h3 className="font-semibold text-foreground">{r.name}</h3>
             <p className="mt-1 text-xs text-muted-foreground">{r.schedule} · {r.recipients} recipients</p>
             <div className="mt-4 flex gap-2">
-              <Button size="sm" variant="outline" className="flex-1" onClick={() => toast.success(`${r.name} downloaded`)}><Download className="mr-1 h-3.5 w-3.5" /> Download</Button>
+              <Button size="sm" variant="outline" className="flex-1" onClick={() => { downloadPdfReport(buildReportPayload(r.name, r.id, r.schedule)); toast.success(`${r.name} downloaded as PDF`); }}><Download className="mr-1 h-3.5 w-3.5" /> Download PDF</Button>
               <Button size="sm" variant="ghost" onClick={() => toast.success(`${r.name} sent`)}>Send now</Button>
             </div>
           </div>
