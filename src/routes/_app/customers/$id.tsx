@@ -86,7 +86,7 @@ function CustomerDetail() {
           <div className="rounded-xl border bg-card shadow-card">
             <table className="w-full text-sm">
               <thead className="bg-surface text-left text-xs uppercase text-muted-foreground"><tr>
-                <th className="px-4 py-3">Invoice</th><th className="px-4 py-3">Period</th><th className="px-4 py-3">Consumption</th><th className="px-4 py-3">Amount</th><th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Invoice</th><th className="px-4 py-3">Period</th><th className="px-4 py-3">Consumption</th><th className="px-4 py-3">Amount</th><th className="px-4 py-3">Status</th><th className="px-4 py-3"></th>
               </tr></thead>
               <tbody>
                 {customerBills.slice(0, 8).map((b) => (
@@ -96,6 +96,9 @@ function CustomerDetail() {
                     <td className="px-4 py-2.5">{b.consumption} KL</td>
                     <td className="px-4 py-2.5 font-semibold tabular-nums">{formatCurrency(b.amount)}</td>
                     <td className="px-4 py-2.5"><StatusBadge status={b.status} /></td>
+                    <td className="px-4 py-2.5 text-right">
+                      <BillDetailDialog bill={b} trigger={<Button size="sm" variant="outline" className="h-7"><Eye className="mr-1 h-3 w-3" /> View</Button>} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
