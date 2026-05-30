@@ -7,6 +7,7 @@ import { BarsChart, TrendArea, TrendLine, Donut } from "@/components/charts";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Download, FileText } from "lucide-react";
 import { toast } from "sonner";
+import { downloadPdfReport } from "@/lib/pdf-report";
 import {
   revenueTrend, consumptionTrend, collectionEfficiencyTrend, townshipComparison,
   outstandingAging, meterHealth, readSuccessTrend, townships, formatCurrency, formatNumber,
