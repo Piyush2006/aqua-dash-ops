@@ -1,5 +1,5 @@
 import { useRouterState, Link } from "@tanstack/react-router";
-import { Search, Bell, AlertTriangle, Calendar, Plus, ChevronDown, LogOut, User, Settings as SettingsIcon, Building2, Home as HomeIcon } from "lucide-react";
+import { Search, Bell, AlertTriangle, Plus, ChevronDown, LogOut, User, Settings as SettingsIcon, Home as HomeIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,11 +7,11 @@ import {
   DropdownMenuLabel, DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { tenants, townships, notifications, alerts } from "@/mocks/data";
-import { useState } from "react";
+import { notifications, alerts } from "@/mocks/data";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { StatusBadge } from "@/components/ui/status-badge";
+
 
 function useBreadcrumbs() {
   const path = useRouterState({ select: (s) => s.location.pathname });
