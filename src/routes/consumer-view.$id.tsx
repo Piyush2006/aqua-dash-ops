@@ -37,6 +37,13 @@ function ConsumerView() {
   const [notifs, setNotifs] = useState(data.notifications);
 
   const currentBill = data.bills[0];
+  // If a bill has been issued, the connection cannot still be Pending.
+  const billIssued = ["Sent", "Paid", "Overdue", "Generated"].includes(currentBill.status);
+  const effectiveStatus = c.connectionStatus === "Suspended"
+    ? "Suspended"
+    : billIssued || c.connectionStatus === "Active"
+      ? "Active"
+      : c.connectionStatus;
   const prevKL = data.consumption[data.consumption.length - 2].consumption;
   const curKL = data.consumption[data.consumption.length - 1].consumption;
   const avgKL = +(data.consumption.reduce((a, b) => a + b.consumption, 0) / data.consumption.length).toFixed(1);
