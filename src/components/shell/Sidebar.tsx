@@ -16,7 +16,7 @@ const nav: Item[] = [
       { title: "MDM Operations", to: "/dashboard/mdm" },
       { title: "Billing", to: "/dashboard/billing" },
       { title: "Consumer 360", to: "/dashboard/consumer" },
-      { title: "Alerts", to: "/dashboard/alerts" },
+      { title: "Exception & Alerts", to: "/dashboard/alerts" },
     ],
   },
   {
