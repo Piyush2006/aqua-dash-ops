@@ -3,7 +3,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Users, Gauge, Receipt, BarChart3, Settings,
-  ChevronDown, ChevronsLeft, Droplets,
+  ChevronDown, ChevronsLeft, Droplets, UserCircle,
 } from "lucide-react";
 
 type Item = { title: string; to: string; icon?: any; children?: { title: string; to: string }[] };
