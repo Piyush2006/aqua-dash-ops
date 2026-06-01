@@ -4,9 +4,10 @@ import { KpiCard } from "@/components/ui/kpi-card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TrendArea } from "@/components/charts";
-import { customers, townships, bills, payments, auditLog, customerConsumption, formatCurrency } from "@/mocks/data";
-import { ArrowLeft, Phone, Mail, MapPin, FileText, Download, Droplets, Gauge, IndianRupee, Calendar, Eye } from "lucide-react";
+import { customers, townships, bills, payments, auditLog, customerConsumption, formatCurrency, customerAvatar, customerInitials } from "@/mocks/data";
+import { ArrowLeft, Phone, Mail, MapPin, FileText, Download, Droplets, Gauge, IndianRupee, Calendar, Eye, UserCircle2 } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { BillDetailDialog } from "@/components/billing/BillDetailDialog";
 
@@ -22,17 +23,30 @@ function CustomerDetail() {
   return (
     <>
       <Link to="/customers" className="mb-3 inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"><ArrowLeft className="h-3.5 w-3.5" /> Back to consumers</Link>
-      <PageHeader
-        title={c.name}
-        description={`${c.id} · ${township.name} · ${c.flat}`}
-        actions={
-          <>
-            <StatusBadge status={c.connectionStatus} />
-            <Button variant="outline" size="sm"><Download className="mr-1.5 h-4 w-4" /> Statement</Button>
-            <Button size="sm">Edit profile</Button>
-          </>
-        }
-      />
+
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-xl border bg-card p-4 shadow-card">
+        <div className="flex items-center gap-4">
+          <Avatar className="h-14 w-14 ring-2 ring-primary/20">
+            <AvatarImage src={customerAvatar(c.id)} alt={c.name} />
+            <AvatarFallback>{customerInitials(c.name)}</AvatarFallback>
+          </Avatar>
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">{c.name}</h1>
+            <p className="text-sm text-muted-foreground">{c.id} · {township.name} · {c.flat}</p>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <StatusBadge status={c.connectionStatus} />
+          <Button asChild variant="default" size="sm" className="gap-1.5">
+            <Link to="/consumer-view/$id" params={{ id: c.id }}>
+              <UserCircle2 className="h-4 w-4" /> Open Consumer Portal
+            </Link>
+          </Button>
+          <Button variant="outline" size="sm"><Download className="mr-1.5 h-4 w-4" /> Statement</Button>
+          <Button variant="outline" size="sm">Edit profile</Button>
+        </div>
+      </div>
+
 
       <Tabs defaultValue="overview">
         <TabsList className="bg-surface">
