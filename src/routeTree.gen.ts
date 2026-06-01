@@ -17,6 +17,8 @@ import { Route as AppPortalIndexRouteImport } from './routes/_app/portal/index'
 import { Route as AppMetersIndexRouteImport } from './routes/_app/meters/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
 import { Route as AppCustomersIndexRouteImport } from './routes/_app/customers/index'
+import { Route as AppPortalRequestsRouteImport } from './routes/_app/portal/requests'
+import { Route as AppPortalNotificationsRouteImport } from './routes/_app/portal/notifications'
 import { Route as AppPortalConsumptionRouteImport } from './routes/_app/portal/consumption'
 import { Route as AppPortalBillsRouteImport } from './routes/_app/portal/bills'
 import { Route as AppMetersReadExceptionsRouteImport } from './routes/_app/meters/read-exceptions'
@@ -91,6 +93,16 @@ const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
 const AppCustomersIndexRoute = AppCustomersIndexRouteImport.update({
   id: '/customers/',
   path: '/customers/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPortalRequestsRoute = AppPortalRequestsRouteImport.update({
+  id: '/portal/requests',
+  path: '/portal/requests',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPortalNotificationsRoute = AppPortalNotificationsRouteImport.update({
+  id: '/portal/notifications',
+  path: '/portal/notifications',
   getParentRoute: () => AppRoute,
 } as any)
 const AppPortalConsumptionRoute = AppPortalConsumptionRouteImport.update({
@@ -315,6 +327,8 @@ export interface FileRoutesByFullPath {
   '/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
   '/portal/bills': typeof AppPortalBillsRoute
   '/portal/consumption': typeof AppPortalConsumptionRoute
+  '/portal/notifications': typeof AppPortalNotificationsRoute
+  '/portal/requests': typeof AppPortalRequestsRoute
   '/customers/': typeof AppCustomersIndexRoute
   '/dashboard/': typeof AppDashboardIndexRoute
   '/meters/': typeof AppMetersIndexRoute
@@ -360,6 +374,8 @@ export interface FileRoutesByTo {
   '/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
   '/portal/bills': typeof AppPortalBillsRoute
   '/portal/consumption': typeof AppPortalConsumptionRoute
+  '/portal/notifications': typeof AppPortalNotificationsRoute
+  '/portal/requests': typeof AppPortalRequestsRoute
   '/customers': typeof AppCustomersIndexRoute
   '/dashboard': typeof AppDashboardIndexRoute
   '/meters': typeof AppMetersIndexRoute
@@ -407,6 +423,8 @@ export interface FileRoutesById {
   '/_app/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
   '/_app/portal/bills': typeof AppPortalBillsRoute
   '/_app/portal/consumption': typeof AppPortalConsumptionRoute
+  '/_app/portal/notifications': typeof AppPortalNotificationsRoute
+  '/_app/portal/requests': typeof AppPortalRequestsRoute
   '/_app/customers/': typeof AppCustomersIndexRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
   '/_app/meters/': typeof AppMetersIndexRoute
@@ -454,6 +472,8 @@ export interface FileRouteTypes {
     | '/meters/read-exceptions'
     | '/portal/bills'
     | '/portal/consumption'
+    | '/portal/notifications'
+    | '/portal/requests'
     | '/customers/'
     | '/dashboard/'
     | '/meters/'
@@ -499,6 +519,8 @@ export interface FileRouteTypes {
     | '/meters/read-exceptions'
     | '/portal/bills'
     | '/portal/consumption'
+    | '/portal/notifications'
+    | '/portal/requests'
     | '/customers'
     | '/dashboard'
     | '/meters'
@@ -545,6 +567,8 @@ export interface FileRouteTypes {
     | '/_app/meters/read-exceptions'
     | '/_app/portal/bills'
     | '/_app/portal/consumption'
+    | '/_app/portal/notifications'
+    | '/_app/portal/requests'
     | '/_app/customers/'
     | '/_app/dashboard/'
     | '/_app/meters/'
@@ -614,6 +638,20 @@ declare module '@tanstack/react-router' {
       path: '/customers'
       fullPath: '/customers/'
       preLoaderRoute: typeof AppCustomersIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/portal/requests': {
+      id: '/_app/portal/requests'
+      path: '/portal/requests'
+      fullPath: '/portal/requests'
+      preLoaderRoute: typeof AppPortalRequestsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/portal/notifications': {
+      id: '/_app/portal/notifications'
+      path: '/portal/notifications'
+      fullPath: '/portal/notifications'
+      preLoaderRoute: typeof AppPortalNotificationsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/portal/consumption': {
@@ -908,6 +946,8 @@ interface AppRouteChildren {
   AppMetersReadExceptionsRoute: typeof AppMetersReadExceptionsRoute
   AppPortalBillsRoute: typeof AppPortalBillsRoute
   AppPortalConsumptionRoute: typeof AppPortalConsumptionRoute
+  AppPortalNotificationsRoute: typeof AppPortalNotificationsRoute
+  AppPortalRequestsRoute: typeof AppPortalRequestsRoute
   AppCustomersIndexRoute: typeof AppCustomersIndexRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppMetersIndexRoute: typeof AppMetersIndexRoute
@@ -951,6 +991,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppMetersReadExceptionsRoute: AppMetersReadExceptionsRoute,
   AppPortalBillsRoute: AppPortalBillsRoute,
   AppPortalConsumptionRoute: AppPortalConsumptionRoute,
+  AppPortalNotificationsRoute: AppPortalNotificationsRoute,
+  AppPortalRequestsRoute: AppPortalRequestsRoute,
   AppCustomersIndexRoute: AppCustomersIndexRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppMetersIndexRoute: AppMetersIndexRoute,
@@ -968,3 +1010,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
