@@ -55,6 +55,17 @@ const nav: Item[] = [
     ],
   },
   {
+    title: "Consumer Portal", to: "/portal", icon: UserCircle,
+    children: [
+      { title: "Dashboard", to: "/portal" },
+      { title: "My Consumption", to: "/portal/consumption" },
+      { title: "My Bills", to: "/portal/bills" },
+      { title: "Service Requests", to: "/portal/requests" },
+      { title: "Notifications", to: "/portal/notifications" },
+      { title: "My Profile", to: "/portal/profile" },
+    ],
+  },
+  {
     title: "Administration", to: "/admin/users", icon: Settings,
     children: [
       { title: "Users & Roles", to: "/admin/users" },
