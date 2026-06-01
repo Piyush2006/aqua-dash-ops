@@ -371,3 +371,11 @@ export const formatCurrency = (v: number) => {
 };
 
 export const formatNumber = (v: number) => new Intl.NumberFormat("en-IN").format(Math.round(v));
+
+// Deterministic consumer avatar URL based on customer id (pravatar 1..70)
+export const customerAvatar = (id: string) => {
+  const n = parseInt(id.replace(/\D/g, "")) || 1;
+  return `https://i.pravatar.cc/120?img=${(n % 70) + 1}`;
+};
+export const customerInitials = (name: string) =>
+  name.split(" ").map((s) => s[0]).slice(0, 2).join("").toUpperCase();

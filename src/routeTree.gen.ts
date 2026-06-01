@@ -13,15 +13,10 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AppPortalIndexRouteImport } from './routes/_app/portal/index'
+import { Route as ConsumerViewIdRouteImport } from './routes/consumer-view.$id'
 import { Route as AppMetersIndexRouteImport } from './routes/_app/meters/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
 import { Route as AppCustomersIndexRouteImport } from './routes/_app/customers/index'
-import { Route as AppPortalRequestsRouteImport } from './routes/_app/portal/requests'
-import { Route as AppPortalProfileRouteImport } from './routes/_app/portal/profile'
-import { Route as AppPortalNotificationsRouteImport } from './routes/_app/portal/notifications'
-import { Route as AppPortalConsumptionRouteImport } from './routes/_app/portal/consumption'
-import { Route as AppPortalBillsRouteImport } from './routes/_app/portal/bills'
 import { Route as AppMetersReadExceptionsRouteImport } from './routes/_app/meters/read-exceptions'
 import { Route as AppMetersReadCyclesRouteImport } from './routes/_app/meters/read-cycles'
 import { Route as AppMetersHierarchyRouteImport } from './routes/_app/meters/hierarchy'
@@ -76,10 +71,10 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppPortalIndexRoute = AppPortalIndexRouteImport.update({
-  id: '/portal/',
-  path: '/portal/',
-  getParentRoute: () => AppRoute,
+const ConsumerViewIdRoute = ConsumerViewIdRouteImport.update({
+  id: '/consumer-view/$id',
+  path: '/consumer-view/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppMetersIndexRoute = AppMetersIndexRouteImport.update({
   id: '/meters/',
@@ -94,31 +89,6 @@ const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
 const AppCustomersIndexRoute = AppCustomersIndexRouteImport.update({
   id: '/customers/',
   path: '/customers/',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppPortalRequestsRoute = AppPortalRequestsRouteImport.update({
-  id: '/portal/requests',
-  path: '/portal/requests',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppPortalProfileRoute = AppPortalProfileRouteImport.update({
-  id: '/portal/profile',
-  path: '/portal/profile',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppPortalNotificationsRoute = AppPortalNotificationsRouteImport.update({
-  id: '/portal/notifications',
-  path: '/portal/notifications',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppPortalConsumptionRoute = AppPortalConsumptionRouteImport.update({
-  id: '/portal/consumption',
-  path: '/portal/consumption',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppPortalBillsRoute = AppPortalBillsRouteImport.update({
-  id: '/portal/bills',
-  path: '/portal/bills',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMetersReadExceptionsRoute = AppMetersReadExceptionsRouteImport.update({
@@ -297,6 +267,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/consumer-view/$id': typeof ConsumerViewIdRoute
   '/admin/approvals': typeof AppAdminApprovalsRoute
   '/admin/audit-logs': typeof AppAdminAuditLogsRoute
   '/admin/holidays': typeof AppAdminHolidaysRoute
@@ -331,20 +302,15 @@ export interface FileRoutesByFullPath {
   '/meters/hierarchy': typeof AppMetersHierarchyRoute
   '/meters/read-cycles': typeof AppMetersReadCyclesRoute
   '/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
-  '/portal/bills': typeof AppPortalBillsRoute
-  '/portal/consumption': typeof AppPortalConsumptionRoute
-  '/portal/notifications': typeof AppPortalNotificationsRoute
-  '/portal/profile': typeof AppPortalProfileRoute
-  '/portal/requests': typeof AppPortalRequestsRoute
   '/customers/': typeof AppCustomersIndexRoute
   '/dashboard/': typeof AppDashboardIndexRoute
   '/meters/': typeof AppMetersIndexRoute
-  '/portal/': typeof AppPortalIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/consumer-view/$id': typeof ConsumerViewIdRoute
   '/admin/approvals': typeof AppAdminApprovalsRoute
   '/admin/audit-logs': typeof AppAdminAuditLogsRoute
   '/admin/holidays': typeof AppAdminHolidaysRoute
@@ -379,15 +345,9 @@ export interface FileRoutesByTo {
   '/meters/hierarchy': typeof AppMetersHierarchyRoute
   '/meters/read-cycles': typeof AppMetersReadCyclesRoute
   '/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
-  '/portal/bills': typeof AppPortalBillsRoute
-  '/portal/consumption': typeof AppPortalConsumptionRoute
-  '/portal/notifications': typeof AppPortalNotificationsRoute
-  '/portal/profile': typeof AppPortalProfileRoute
-  '/portal/requests': typeof AppPortalRequestsRoute
   '/customers': typeof AppCustomersIndexRoute
   '/dashboard': typeof AppDashboardIndexRoute
   '/meters': typeof AppMetersIndexRoute
-  '/portal': typeof AppPortalIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -395,6 +355,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/consumer-view/$id': typeof ConsumerViewIdRoute
   '/_app/admin/approvals': typeof AppAdminApprovalsRoute
   '/_app/admin/audit-logs': typeof AppAdminAuditLogsRoute
   '/_app/admin/holidays': typeof AppAdminHolidaysRoute
@@ -429,15 +390,9 @@ export interface FileRoutesById {
   '/_app/meters/hierarchy': typeof AppMetersHierarchyRoute
   '/_app/meters/read-cycles': typeof AppMetersReadCyclesRoute
   '/_app/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
-  '/_app/portal/bills': typeof AppPortalBillsRoute
-  '/_app/portal/consumption': typeof AppPortalConsumptionRoute
-  '/_app/portal/notifications': typeof AppPortalNotificationsRoute
-  '/_app/portal/profile': typeof AppPortalProfileRoute
-  '/_app/portal/requests': typeof AppPortalRequestsRoute
   '/_app/customers/': typeof AppCustomersIndexRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
   '/_app/meters/': typeof AppMetersIndexRoute
-  '/_app/portal/': typeof AppPortalIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -445,6 +400,7 @@ export interface FileRouteTypes {
     | '/'
     | '/forgot-password'
     | '/login'
+    | '/consumer-view/$id'
     | '/admin/approvals'
     | '/admin/audit-logs'
     | '/admin/holidays'
@@ -479,20 +435,15 @@ export interface FileRouteTypes {
     | '/meters/hierarchy'
     | '/meters/read-cycles'
     | '/meters/read-exceptions'
-    | '/portal/bills'
-    | '/portal/consumption'
-    | '/portal/notifications'
-    | '/portal/profile'
-    | '/portal/requests'
     | '/customers/'
     | '/dashboard/'
     | '/meters/'
-    | '/portal/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/forgot-password'
     | '/login'
+    | '/consumer-view/$id'
     | '/admin/approvals'
     | '/admin/audit-logs'
     | '/admin/holidays'
@@ -527,21 +478,16 @@ export interface FileRouteTypes {
     | '/meters/hierarchy'
     | '/meters/read-cycles'
     | '/meters/read-exceptions'
-    | '/portal/bills'
-    | '/portal/consumption'
-    | '/portal/notifications'
-    | '/portal/profile'
-    | '/portal/requests'
     | '/customers'
     | '/dashboard'
     | '/meters'
-    | '/portal'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/forgot-password'
     | '/login'
+    | '/consumer-view/$id'
     | '/_app/admin/approvals'
     | '/_app/admin/audit-logs'
     | '/_app/admin/holidays'
@@ -576,15 +522,9 @@ export interface FileRouteTypes {
     | '/_app/meters/hierarchy'
     | '/_app/meters/read-cycles'
     | '/_app/meters/read-exceptions'
-    | '/_app/portal/bills'
-    | '/_app/portal/consumption'
-    | '/_app/portal/notifications'
-    | '/_app/portal/profile'
-    | '/_app/portal/requests'
     | '/_app/customers/'
     | '/_app/dashboard/'
     | '/_app/meters/'
-    | '/_app/portal/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -592,6 +532,7 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
+  ConsumerViewIdRoute: typeof ConsumerViewIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -624,12 +565,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/portal/': {
-      id: '/_app/portal/'
-      path: '/portal'
-      fullPath: '/portal/'
-      preLoaderRoute: typeof AppPortalIndexRouteImport
-      parentRoute: typeof AppRoute
+    '/consumer-view/$id': {
+      id: '/consumer-view/$id'
+      path: '/consumer-view/$id'
+      fullPath: '/consumer-view/$id'
+      preLoaderRoute: typeof ConsumerViewIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/meters/': {
       id: '/_app/meters/'
@@ -650,41 +591,6 @@ declare module '@tanstack/react-router' {
       path: '/customers'
       fullPath: '/customers/'
       preLoaderRoute: typeof AppCustomersIndexRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/portal/requests': {
-      id: '/_app/portal/requests'
-      path: '/portal/requests'
-      fullPath: '/portal/requests'
-      preLoaderRoute: typeof AppPortalRequestsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/portal/profile': {
-      id: '/_app/portal/profile'
-      path: '/portal/profile'
-      fullPath: '/portal/profile'
-      preLoaderRoute: typeof AppPortalProfileRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/portal/notifications': {
-      id: '/_app/portal/notifications'
-      path: '/portal/notifications'
-      fullPath: '/portal/notifications'
-      preLoaderRoute: typeof AppPortalNotificationsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/portal/consumption': {
-      id: '/_app/portal/consumption'
-      path: '/portal/consumption'
-      fullPath: '/portal/consumption'
-      preLoaderRoute: typeof AppPortalConsumptionRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/portal/bills': {
-      id: '/_app/portal/bills'
-      path: '/portal/bills'
-      fullPath: '/portal/bills'
-      preLoaderRoute: typeof AppPortalBillsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/meters/read-exceptions': {
@@ -963,15 +869,9 @@ interface AppRouteChildren {
   AppMetersHierarchyRoute: typeof AppMetersHierarchyRoute
   AppMetersReadCyclesRoute: typeof AppMetersReadCyclesRoute
   AppMetersReadExceptionsRoute: typeof AppMetersReadExceptionsRoute
-  AppPortalBillsRoute: typeof AppPortalBillsRoute
-  AppPortalConsumptionRoute: typeof AppPortalConsumptionRoute
-  AppPortalNotificationsRoute: typeof AppPortalNotificationsRoute
-  AppPortalProfileRoute: typeof AppPortalProfileRoute
-  AppPortalRequestsRoute: typeof AppPortalRequestsRoute
   AppCustomersIndexRoute: typeof AppCustomersIndexRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppMetersIndexRoute: typeof AppMetersIndexRoute
-  AppPortalIndexRoute: typeof AppPortalIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -1009,15 +909,9 @@ const AppRouteChildren: AppRouteChildren = {
   AppMetersHierarchyRoute: AppMetersHierarchyRoute,
   AppMetersReadCyclesRoute: AppMetersReadCyclesRoute,
   AppMetersReadExceptionsRoute: AppMetersReadExceptionsRoute,
-  AppPortalBillsRoute: AppPortalBillsRoute,
-  AppPortalConsumptionRoute: AppPortalConsumptionRoute,
-  AppPortalNotificationsRoute: AppPortalNotificationsRoute,
-  AppPortalProfileRoute: AppPortalProfileRoute,
-  AppPortalRequestsRoute: AppPortalRequestsRoute,
   AppCustomersIndexRoute: AppCustomersIndexRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppMetersIndexRoute: AppMetersIndexRoute,
-  AppPortalIndexRoute: AppPortalIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -1027,6 +921,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
+  ConsumerViewIdRoute: ConsumerViewIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

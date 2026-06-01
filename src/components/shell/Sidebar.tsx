@@ -3,7 +3,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Users, Gauge, Receipt, BarChart3, Settings,
-  ChevronDown, ChevronsLeft, Droplets, UserCircle,
+  ChevronDown, ChevronsLeft, Droplets,
 } from "lucide-react";
 
 type Item = { title: string; to: string; icon?: any; children?: { title: string; to: string }[] };
@@ -52,17 +52,6 @@ const nav: Item[] = [
     children: [
       { title: "Reports", to: "/analytics/reports" },
       { title: "Custom Reports", to: "/analytics/custom" },
-    ],
-  },
-  {
-    title: "Consumer Portal", to: "/portal", icon: UserCircle,
-    children: [
-      { title: "Dashboard", to: "/portal" },
-      { title: "My Consumption", to: "/portal/consumption" },
-      { title: "My Bills", to: "/portal/bills" },
-      { title: "Service Requests", to: "/portal/requests" },
-      { title: "Notifications", to: "/portal/notifications" },
-      { title: "My Profile", to: "/portal/profile" },
     ],
   },
   {
