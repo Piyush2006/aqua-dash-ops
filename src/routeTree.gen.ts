@@ -13,6 +13,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppPortalIndexRouteImport } from './routes/_app/portal/index'
 import { Route as AppMetersIndexRouteImport } from './routes/_app/meters/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
 import { Route as AppCustomersIndexRouteImport } from './routes/_app/customers/index'
@@ -69,6 +70,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppPortalIndexRoute = AppPortalIndexRouteImport.update({
+  id: '/portal/',
+  path: '/portal/',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppMetersIndexRoute = AppMetersIndexRouteImport.update({
   id: '/meters/',
@@ -298,6 +304,7 @@ export interface FileRoutesByFullPath {
   '/customers/': typeof AppCustomersIndexRoute
   '/dashboard/': typeof AppDashboardIndexRoute
   '/meters/': typeof AppMetersIndexRoute
+  '/portal/': typeof AppPortalIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -340,6 +347,7 @@ export interface FileRoutesByTo {
   '/customers': typeof AppCustomersIndexRoute
   '/dashboard': typeof AppDashboardIndexRoute
   '/meters': typeof AppMetersIndexRoute
+  '/portal': typeof AppPortalIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -384,6 +392,7 @@ export interface FileRoutesById {
   '/_app/customers/': typeof AppCustomersIndexRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
   '/_app/meters/': typeof AppMetersIndexRoute
+  '/_app/portal/': typeof AppPortalIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -428,6 +437,7 @@ export interface FileRouteTypes {
     | '/customers/'
     | '/dashboard/'
     | '/meters/'
+    | '/portal/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -470,6 +480,7 @@ export interface FileRouteTypes {
     | '/customers'
     | '/dashboard'
     | '/meters'
+    | '/portal'
   id:
     | '__root__'
     | '/'
@@ -513,6 +524,7 @@ export interface FileRouteTypes {
     | '/_app/customers/'
     | '/_app/dashboard/'
     | '/_app/meters/'
+    | '/_app/portal/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -551,6 +563,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/portal/': {
+      id: '/_app/portal/'
+      path: '/portal'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof AppPortalIndexRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/meters/': {
       id: '/_app/meters/'
@@ -852,6 +871,7 @@ interface AppRouteChildren {
   AppCustomersIndexRoute: typeof AppCustomersIndexRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppMetersIndexRoute: typeof AppMetersIndexRoute
+  AppPortalIndexRoute: typeof AppPortalIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -892,6 +912,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppCustomersIndexRoute: AppCustomersIndexRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppMetersIndexRoute: AppMetersIndexRoute,
+  AppPortalIndexRoute: AppPortalIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
