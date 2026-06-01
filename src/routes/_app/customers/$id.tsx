@@ -1,5 +1,5 @@
 import { createFileRoute, useParams, Link } from "@tanstack/react-router";
-import { PageHeader } from "@/components/ui/page-header";
+
 import { KpiCard } from "@/components/ui/kpi-card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
