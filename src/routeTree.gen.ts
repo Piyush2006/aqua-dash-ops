@@ -17,6 +17,7 @@ import { Route as AppPortalIndexRouteImport } from './routes/_app/portal/index'
 import { Route as AppMetersIndexRouteImport } from './routes/_app/meters/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
 import { Route as AppCustomersIndexRouteImport } from './routes/_app/customers/index'
+import { Route as AppPortalConsumptionRouteImport } from './routes/_app/portal/consumption'
 import { Route as AppMetersReadExceptionsRouteImport } from './routes/_app/meters/read-exceptions'
 import { Route as AppMetersReadCyclesRouteImport } from './routes/_app/meters/read-cycles'
 import { Route as AppMetersHierarchyRouteImport } from './routes/_app/meters/hierarchy'
@@ -89,6 +90,11 @@ const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
 const AppCustomersIndexRoute = AppCustomersIndexRouteImport.update({
   id: '/customers/',
   path: '/customers/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPortalConsumptionRoute = AppPortalConsumptionRouteImport.update({
+  id: '/portal/consumption',
+  path: '/portal/consumption',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMetersReadExceptionsRoute = AppMetersReadExceptionsRouteImport.update({
@@ -301,6 +307,7 @@ export interface FileRoutesByFullPath {
   '/meters/hierarchy': typeof AppMetersHierarchyRoute
   '/meters/read-cycles': typeof AppMetersReadCyclesRoute
   '/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
+  '/portal/consumption': typeof AppPortalConsumptionRoute
   '/customers/': typeof AppCustomersIndexRoute
   '/dashboard/': typeof AppDashboardIndexRoute
   '/meters/': typeof AppMetersIndexRoute
@@ -344,6 +351,7 @@ export interface FileRoutesByTo {
   '/meters/hierarchy': typeof AppMetersHierarchyRoute
   '/meters/read-cycles': typeof AppMetersReadCyclesRoute
   '/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
+  '/portal/consumption': typeof AppPortalConsumptionRoute
   '/customers': typeof AppCustomersIndexRoute
   '/dashboard': typeof AppDashboardIndexRoute
   '/meters': typeof AppMetersIndexRoute
@@ -389,6 +397,7 @@ export interface FileRoutesById {
   '/_app/meters/hierarchy': typeof AppMetersHierarchyRoute
   '/_app/meters/read-cycles': typeof AppMetersReadCyclesRoute
   '/_app/meters/read-exceptions': typeof AppMetersReadExceptionsRoute
+  '/_app/portal/consumption': typeof AppPortalConsumptionRoute
   '/_app/customers/': typeof AppCustomersIndexRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
   '/_app/meters/': typeof AppMetersIndexRoute
@@ -434,6 +443,7 @@ export interface FileRouteTypes {
     | '/meters/hierarchy'
     | '/meters/read-cycles'
     | '/meters/read-exceptions'
+    | '/portal/consumption'
     | '/customers/'
     | '/dashboard/'
     | '/meters/'
@@ -477,6 +487,7 @@ export interface FileRouteTypes {
     | '/meters/hierarchy'
     | '/meters/read-cycles'
     | '/meters/read-exceptions'
+    | '/portal/consumption'
     | '/customers'
     | '/dashboard'
     | '/meters'
@@ -521,6 +532,7 @@ export interface FileRouteTypes {
     | '/_app/meters/hierarchy'
     | '/_app/meters/read-cycles'
     | '/_app/meters/read-exceptions'
+    | '/_app/portal/consumption'
     | '/_app/customers/'
     | '/_app/dashboard/'
     | '/_app/meters/'
@@ -590,6 +602,13 @@ declare module '@tanstack/react-router' {
       path: '/customers'
       fullPath: '/customers/'
       preLoaderRoute: typeof AppCustomersIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/portal/consumption': {
+      id: '/_app/portal/consumption'
+      path: '/portal/consumption'
+      fullPath: '/portal/consumption'
+      preLoaderRoute: typeof AppPortalConsumptionRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/meters/read-exceptions': {
@@ -868,6 +887,7 @@ interface AppRouteChildren {
   AppMetersHierarchyRoute: typeof AppMetersHierarchyRoute
   AppMetersReadCyclesRoute: typeof AppMetersReadCyclesRoute
   AppMetersReadExceptionsRoute: typeof AppMetersReadExceptionsRoute
+  AppPortalConsumptionRoute: typeof AppPortalConsumptionRoute
   AppCustomersIndexRoute: typeof AppCustomersIndexRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppMetersIndexRoute: typeof AppMetersIndexRoute
@@ -909,6 +929,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppMetersHierarchyRoute: AppMetersHierarchyRoute,
   AppMetersReadCyclesRoute: AppMetersReadCyclesRoute,
   AppMetersReadExceptionsRoute: AppMetersReadExceptionsRoute,
+  AppPortalConsumptionRoute: AppPortalConsumptionRoute,
   AppCustomersIndexRoute: AppCustomersIndexRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppMetersIndexRoute: AppMetersIndexRoute,
