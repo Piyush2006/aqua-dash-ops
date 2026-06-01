@@ -37,6 +37,13 @@ function ConsumerView() {
   const [notifs, setNotifs] = useState(data.notifications);
 
   const currentBill = data.bills[0];
+  // If a bill has been issued, the connection cannot still be Pending.
+  const billIssued = ["Sent", "Paid", "Overdue", "Generated"].includes(currentBill.status);
+  const effectiveStatus = c.connectionStatus === "Suspended"
+    ? "Suspended"
+    : billIssued || c.connectionStatus === "Active"
+      ? "Active"
+      : c.connectionStatus;
   const prevKL = data.consumption[data.consumption.length - 2].consumption;
   const curKL = data.consumption[data.consumption.length - 1].consumption;
   const avgKL = +(data.consumption.reduce((a, b) => a + b.consumption, 0) / data.consumption.length).toFixed(1);
@@ -71,36 +78,50 @@ function ConsumerView() {
 
       <main className="mx-auto max-w-6xl space-y-6 px-4 py-6">
         {/* Consumer hero */}
-        <section className="relative overflow-hidden rounded-2xl border bg-card p-6 shadow-card">
-          <div className="absolute inset-x-0 top-0 h-24 gradient-primary opacity-90" />
-          <div className="relative flex flex-wrap items-end gap-5">
-            <Avatar className="h-24 w-24 ring-4 ring-card">
-              <AvatarImage src={customerAvatar(c.id)} alt={c.name} />
-              <AvatarFallback className="text-lg">{customerInitials(c.name)}</AvatarFallback>
-            </Avatar>
-            <div className="min-w-0 flex-1 pt-12 sm:pt-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-2xl font-semibold tracking-tight text-foreground">{c.name}</h1>
-                <StatusBadge status={c.connectionStatus} dot />
+        <section className="overflow-hidden rounded-2xl border bg-card shadow-card">
+          {/* Decorative gradient band */}
+          <div className="relative h-28 gradient-primary">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_60%)]" />
+          </div>
+
+          {/* Avatar + content */}
+          <div className="px-6 pb-6">
+            <div className="-mt-12 flex flex-wrap items-end justify-between gap-4">
+              <div className="flex items-end gap-4">
+                <Avatar className="h-24 w-24 ring-4 ring-card shadow-card">
+                  <AvatarImage src={customerAvatar(c.id)} alt={c.name} />
+                  <AvatarFallback className="text-lg">{customerInitials(c.name)}</AvatarFallback>
+                </Avatar>
+                <div className="pb-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h1 className="text-2xl font-semibold tracking-tight text-foreground">{c.name}</h1>
+                    <StatusBadge status={effectiveStatus} dot />
+                  </div>
+                  <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <MapPin className="h-3.5 w-3.5" /> {c.flat}, {township.name}, {township.city}
+                  </p>
+                </div>
               </div>
-              <div className="mt-2 grid grid-cols-2 gap-x-6 gap-y-1 text-xs text-muted-foreground sm:grid-cols-4">
-                <span><span className="font-medium text-foreground">{c.id}</span> · Consumer ID</span>
-                <span><span className="font-medium text-foreground">CN-{c.id.replace("CUS-", "")}</span> · Connection</span>
-                <span><span className="font-medium text-foreground">{c.tariff.startsWith("Commercial") ? "Commercial" : "Residential"}</span> · Type</span>
-                <span><span className="font-medium text-foreground">{c.meterId}</span> · Meter</span>
+              <div className="flex gap-2">
+                <Button size="sm" onClick={() => toast.success("Redirecting to payment gateway…")}>
+                  <IndianRupee className="mr-1.5 h-4 w-4" /> Pay bill
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => downloadBill(currentBill, c.name)}>
+                  <Download className="mr-1.5 h-4 w-4" /> Bill PDF
+                </Button>
               </div>
-              <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                <MapPin className="h-3.5 w-3.5" /> {c.flat}, {township.name}, {township.city}
-              </p>
             </div>
-            <div className="flex gap-2">
-              <Button size="sm"><IndianRupee className="mr-1.5 h-4 w-4" /> Pay bill</Button>
-              <Button size="sm" variant="outline" onClick={() => downloadBill(currentBill, c.name)}>
-                <Download className="mr-1.5 h-4 w-4" /> Bill PDF
-              </Button>
-            </div>
+
+            {/* Meta grid */}
+            <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 border-t pt-4 sm:grid-cols-4">
+              <MetaItem label="Consumer ID" value={c.id} />
+              <MetaItem label="Connection No" value={`CN-${c.id.replace("CUS-", "")}`} />
+              <MetaItem label="Consumer Type" value={c.tariff.startsWith("Commercial") ? "Commercial" : "Residential"} />
+              <MetaItem label="Meter ID" value={c.meterId} />
+            </dl>
           </div>
         </section>
+
 
         {/* Summary cards */}
         <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -332,6 +353,15 @@ function Widget({ title, subtitle, action, children, className = "" }: { title: 
       </div>
       {children}
     </section>
+  );
+}
+
+function MetaItem({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <div className="min-w-0">
+      <dt className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{label}</dt>
+      <dd className="mt-0.5 truncate text-sm font-semibold text-foreground">{value}</dd>
+    </div>
   );
 }
 
