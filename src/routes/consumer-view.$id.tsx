@@ -86,23 +86,12 @@ function ConsumerView() {
 
           {/* Avatar + content */}
           <div className="px-6 pb-6">
-            <div className="-mt-12 flex flex-wrap items-end justify-between gap-4">
-              <div className="flex items-end gap-4">
-                <Avatar className="h-24 w-24 ring-4 ring-card shadow-card">
-                  <AvatarImage src={customerAvatar(c.id)} alt={c.name} />
-                  <AvatarFallback className="text-lg">{customerInitials(c.name)}</AvatarFallback>
-                </Avatar>
-                <div className="pb-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h1 className="text-2xl font-semibold tracking-tight text-foreground">{c.name}</h1>
-                    <StatusBadge status={effectiveStatus} dot />
-                  </div>
-                  <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <MapPin className="h-3.5 w-3.5" /> {c.flat}, {township.name}, {township.city}
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-2">
+            <div className="-mt-12 flex justify-between gap-4">
+              <Avatar className="h-24 w-24 ring-4 ring-card shadow-card">
+                <AvatarImage src={customerAvatar(c.id)} alt={c.name} />
+                <AvatarFallback className="text-lg">{customerInitials(c.name)}</AvatarFallback>
+              </Avatar>
+              <div className="flex gap-2 pt-14">
                 <Button size="sm" onClick={() => toast.success("Redirecting to payment gateway…")}>
                   <IndianRupee className="mr-1.5 h-4 w-4" /> Pay bill
                 </Button>
@@ -110,6 +99,16 @@ function ConsumerView() {
                   <Download className="mr-1.5 h-4 w-4" /> Bill PDF
                 </Button>
               </div>
+            </div>
+
+            <div className="mt-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="text-2xl font-semibold tracking-tight text-foreground">{c.name}</h1>
+                <StatusBadge status={effectiveStatus} dot />
+              </div>
+              <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                <MapPin className="h-3.5 w-3.5" /> {c.flat}, {township.name}, {township.city}
+              </p>
             </div>
 
             {/* Meta grid */}
