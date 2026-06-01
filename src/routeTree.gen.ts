@@ -13,6 +13,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConsumerViewIdRouteImport } from './routes/consumer-view.$id'
 import { Route as AppMetersIndexRouteImport } from './routes/_app/meters/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
 import { Route as AppCustomersIndexRouteImport } from './routes/_app/customers/index'
@@ -68,6 +69,11 @@ const AppRoute = AppRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsumerViewIdRoute = ConsumerViewIdRouteImport.update({
+  id: '/consumer-view/$id',
+  path: '/consumer-view/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppMetersIndexRoute = AppMetersIndexRouteImport.update({
@@ -261,6 +267,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/consumer-view/$id': typeof ConsumerViewIdRoute
   '/admin/approvals': typeof AppAdminApprovalsRoute
   '/admin/audit-logs': typeof AppAdminAuditLogsRoute
   '/admin/holidays': typeof AppAdminHolidaysRoute
@@ -303,6 +310,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/consumer-view/$id': typeof ConsumerViewIdRoute
   '/admin/approvals': typeof AppAdminApprovalsRoute
   '/admin/audit-logs': typeof AppAdminAuditLogsRoute
   '/admin/holidays': typeof AppAdminHolidaysRoute
@@ -347,6 +355,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/consumer-view/$id': typeof ConsumerViewIdRoute
   '/_app/admin/approvals': typeof AppAdminApprovalsRoute
   '/_app/admin/audit-logs': typeof AppAdminAuditLogsRoute
   '/_app/admin/holidays': typeof AppAdminHolidaysRoute
@@ -391,6 +400,7 @@ export interface FileRouteTypes {
     | '/'
     | '/forgot-password'
     | '/login'
+    | '/consumer-view/$id'
     | '/admin/approvals'
     | '/admin/audit-logs'
     | '/admin/holidays'
@@ -433,6 +443,7 @@ export interface FileRouteTypes {
     | '/'
     | '/forgot-password'
     | '/login'
+    | '/consumer-view/$id'
     | '/admin/approvals'
     | '/admin/audit-logs'
     | '/admin/holidays'
@@ -476,6 +487,7 @@ export interface FileRouteTypes {
     | '/_app'
     | '/forgot-password'
     | '/login'
+    | '/consumer-view/$id'
     | '/_app/admin/approvals'
     | '/_app/admin/audit-logs'
     | '/_app/admin/holidays'
@@ -520,6 +532,7 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
+  ConsumerViewIdRoute: typeof ConsumerViewIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -550,6 +563,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/consumer-view/$id': {
+      id: '/consumer-view/$id'
+      path: '/consumer-view/$id'
+      fullPath: '/consumer-view/$id'
+      preLoaderRoute: typeof ConsumerViewIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/meters/': {
@@ -901,6 +921,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
+  ConsumerViewIdRoute: ConsumerViewIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
