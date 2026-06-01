@@ -18,6 +18,7 @@ import { Route as AppMetersIndexRouteImport } from './routes/_app/meters/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
 import { Route as AppCustomersIndexRouteImport } from './routes/_app/customers/index'
 import { Route as AppPortalRequestsRouteImport } from './routes/_app/portal/requests'
+import { Route as AppPortalProfileRouteImport } from './routes/_app/portal/profile'
 import { Route as AppPortalNotificationsRouteImport } from './routes/_app/portal/notifications'
 import { Route as AppPortalConsumptionRouteImport } from './routes/_app/portal/consumption'
 import { Route as AppPortalBillsRouteImport } from './routes/_app/portal/bills'
@@ -98,6 +99,11 @@ const AppCustomersIndexRoute = AppCustomersIndexRouteImport.update({
 const AppPortalRequestsRoute = AppPortalRequestsRouteImport.update({
   id: '/portal/requests',
   path: '/portal/requests',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPortalProfileRoute = AppPortalProfileRouteImport.update({
+  id: '/portal/profile',
+  path: '/portal/profile',
   getParentRoute: () => AppRoute,
 } as any)
 const AppPortalNotificationsRoute = AppPortalNotificationsRouteImport.update({
@@ -328,6 +334,7 @@ export interface FileRoutesByFullPath {
   '/portal/bills': typeof AppPortalBillsRoute
   '/portal/consumption': typeof AppPortalConsumptionRoute
   '/portal/notifications': typeof AppPortalNotificationsRoute
+  '/portal/profile': typeof AppPortalProfileRoute
   '/portal/requests': typeof AppPortalRequestsRoute
   '/customers/': typeof AppCustomersIndexRoute
   '/dashboard/': typeof AppDashboardIndexRoute
@@ -375,6 +382,7 @@ export interface FileRoutesByTo {
   '/portal/bills': typeof AppPortalBillsRoute
   '/portal/consumption': typeof AppPortalConsumptionRoute
   '/portal/notifications': typeof AppPortalNotificationsRoute
+  '/portal/profile': typeof AppPortalProfileRoute
   '/portal/requests': typeof AppPortalRequestsRoute
   '/customers': typeof AppCustomersIndexRoute
   '/dashboard': typeof AppDashboardIndexRoute
@@ -424,6 +432,7 @@ export interface FileRoutesById {
   '/_app/portal/bills': typeof AppPortalBillsRoute
   '/_app/portal/consumption': typeof AppPortalConsumptionRoute
   '/_app/portal/notifications': typeof AppPortalNotificationsRoute
+  '/_app/portal/profile': typeof AppPortalProfileRoute
   '/_app/portal/requests': typeof AppPortalRequestsRoute
   '/_app/customers/': typeof AppCustomersIndexRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
@@ -473,6 +482,7 @@ export interface FileRouteTypes {
     | '/portal/bills'
     | '/portal/consumption'
     | '/portal/notifications'
+    | '/portal/profile'
     | '/portal/requests'
     | '/customers/'
     | '/dashboard/'
@@ -520,6 +530,7 @@ export interface FileRouteTypes {
     | '/portal/bills'
     | '/portal/consumption'
     | '/portal/notifications'
+    | '/portal/profile'
     | '/portal/requests'
     | '/customers'
     | '/dashboard'
@@ -568,6 +579,7 @@ export interface FileRouteTypes {
     | '/_app/portal/bills'
     | '/_app/portal/consumption'
     | '/_app/portal/notifications'
+    | '/_app/portal/profile'
     | '/_app/portal/requests'
     | '/_app/customers/'
     | '/_app/dashboard/'
@@ -645,6 +657,13 @@ declare module '@tanstack/react-router' {
       path: '/portal/requests'
       fullPath: '/portal/requests'
       preLoaderRoute: typeof AppPortalRequestsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/portal/profile': {
+      id: '/_app/portal/profile'
+      path: '/portal/profile'
+      fullPath: '/portal/profile'
+      preLoaderRoute: typeof AppPortalProfileRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/portal/notifications': {
@@ -947,6 +966,7 @@ interface AppRouteChildren {
   AppPortalBillsRoute: typeof AppPortalBillsRoute
   AppPortalConsumptionRoute: typeof AppPortalConsumptionRoute
   AppPortalNotificationsRoute: typeof AppPortalNotificationsRoute
+  AppPortalProfileRoute: typeof AppPortalProfileRoute
   AppPortalRequestsRoute: typeof AppPortalRequestsRoute
   AppCustomersIndexRoute: typeof AppCustomersIndexRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
@@ -992,6 +1012,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppPortalBillsRoute: AppPortalBillsRoute,
   AppPortalConsumptionRoute: AppPortalConsumptionRoute,
   AppPortalNotificationsRoute: AppPortalNotificationsRoute,
+  AppPortalProfileRoute: AppPortalProfileRoute,
   AppPortalRequestsRoute: AppPortalRequestsRoute,
   AppCustomersIndexRoute: AppCustomersIndexRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
