@@ -356,6 +356,15 @@ function Widget({ title, subtitle, action, children, className = "" }: { title: 
   );
 }
 
+function MetaItem({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <div className="min-w-0">
+      <dt className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{label}</dt>
+      <dd className="mt-0.5 truncate text-sm font-semibold text-foreground">{value}</dd>
+    </div>
+  );
+}
+
 function ProfileRow({ icon: Icon, label, value }: { icon: any; label: string; value: React.ReactNode }) {
   return (
     <div className="flex items-start gap-2 border-t py-2.5 text-sm first:border-t-0 first:pt-0">
