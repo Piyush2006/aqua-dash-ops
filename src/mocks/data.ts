@@ -224,27 +224,79 @@ export const payments: Payment[] = bills.filter((b) => b.status === "Paid").map(
   date: `2025-11-${String(int(1, 28)).padStart(2, "0")}`,
 }));
 
+export type AlertCategory =
+  | "Missing Readings"
+  | "Billing Exceptions"
+  | "Consumption Alerts"
+  | "Revenue Leakage"
+  | "Service Escalations"
+  | "Operational Exceptions";
+
 export type Alert = {
   id: string;
   severity: "Critical" | "High" | "Medium" | "Low";
-  type: "Meter Offline" | "Leakage Detected" | "Reverse Flow" | "Billing Failure" | "Payment Overdue" | "Abnormal Consumption" | "Low Battery";
+  category: AlertCategory;
+  type: "Meter Offline" | "Leakage Detected" | "Reverse Flow" | "Billing Failure" | "Payment Overdue" | "Abnormal Consumption" | "Low Battery" | "Missing Reading";
   source: string;
+  consumerName?: string;
   township: string;
   raisedAt: string;
-  status: "Open" | "Acknowledged" | "In Progress" | "Resolved";
+  createdDate: string;
+  status: "Open" | "Acknowledged" | "Resolved";
   assignee?: string;
+  recommendedAction: string;
 };
 
-export const alerts: Alert[] = range(48).map((i) => ({
-  id: `ALT-${String(10000 + i).padStart(6, "0")}`,
-  severity: pick(["Critical", "High", "High", "Medium", "Medium", "Medium", "Low", "Low"]) as Alert["severity"],
-  type: pick(["Meter Offline", "Leakage Detected", "Reverse Flow", "Billing Failure", "Payment Overdue", "Abnormal Consumption", "Low Battery"]) as Alert["type"],
-  source: `MTR-${String(50000 + int(0, 119)).padStart(6, "0")}`,
-  township: pick(townships).name,
-  raisedAt: `${int(1, 23)}h ago`,
-  status: pick(["Open", "Open", "Acknowledged", "In Progress", "Resolved"]) as Alert["status"],
-  assignee: rand() > 0.5 ? pick(firstNames) : undefined,
-}));
+const typeToCategory: Record<Alert["type"], AlertCategory> = {
+  "Missing Reading": "Missing Readings",
+  "Billing Failure": "Billing Exceptions",
+  "Abnormal Consumption": "Consumption Alerts",
+  "Leakage Detected": "Revenue Leakage",
+  "Reverse Flow": "Revenue Leakage",
+  "Payment Overdue": "Service Escalations",
+  "Meter Offline": "Operational Exceptions",
+  "Low Battery": "Operational Exceptions",
+};
+
+const typeToAction: Record<Alert["type"], string> = {
+  "Missing Reading": "Assign Reading Task",
+  "Billing Failure": "Review Bill",
+  "Abnormal Consumption": "Verify Consumption",
+  "Leakage Detected": "Dispatch Field Team",
+  "Reverse Flow": "Inspect Meter Installation",
+  "Payment Overdue": "Send Payment Reminder",
+  "Meter Offline": "Schedule Meter Diagnostic",
+  "Low Battery": "Schedule Battery Replacement",
+};
+
+export const alertCategories: AlertCategory[] = [
+  "Missing Readings",
+  "Billing Exceptions",
+  "Consumption Alerts",
+  "Revenue Leakage",
+  "Service Escalations",
+  "Operational Exceptions",
+];
+
+export const alerts: Alert[] = range(48).map((i) => {
+  const type = pick(["Meter Offline", "Leakage Detected", "Reverse Flow", "Billing Failure", "Payment Overdue", "Abnormal Consumption", "Low Battery", "Missing Reading", "Missing Reading", "Billing Failure"]) as Alert["type"];
+  const d = new Date();
+  d.setDate(d.getDate() - int(0, 29));
+  return {
+    id: `ALT-${String(10000 + i).padStart(6, "0")}`,
+    severity: pick(["Critical", "High", "High", "Medium", "Medium", "Medium", "Low", "Low"]) as Alert["severity"],
+    category: typeToCategory[type],
+    type,
+    source: `MTR-${String(50000 + int(0, 119)).padStart(6, "0")}`,
+    consumerName: `${pick(firstNames)} ${pick(lastNames)}`,
+    township: pick(townships).name,
+    raisedAt: `${int(1, 23)}h ago`,
+    createdDate: d.toISOString().slice(0, 10),
+    status: pick(["Open", "Open", "Open", "Acknowledged", "Acknowledged", "Resolved"]) as Alert["status"],
+    assignee: rand() > 0.5 ? pick(firstNames) : undefined,
+    recommendedAction: typeToAction[type],
+  };
+});
 
 export const topDefaulters = customers
   .filter((c) => c.outstanding > 0)
