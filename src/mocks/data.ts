@@ -431,3 +431,73 @@ export const customerAvatar = (id: string) => {
 };
 export const customerInitials = (name: string) =>
   name.split(" ").map((s) => s[0]).slice(0, 2).join("").toUpperCase();
+
+// ============= Billing Insights & Consumption Analytics =============
+
+export const consumerCategories = ["Residential", "Commercial", "Industrial", "Bulk", "Common Area"] as const;
+export type ConsumerCategory = typeof consumerCategories[number];
+
+export const billingCycles = ["Monthly", "Bi-Monthly", "Quarterly"] as const;
+
+export const billingInsightsKpis = {
+  billsGenerated: { value: 8_040, delta: 2.4, label: "Bills Generated" },
+  totalBilled: { value: 4_82_30_000, delta: 6.8, label: "Total Billed Amount (₹)" },
+  billingAccuracy: { value: 98.4, delta: 0.6, label: "Billing Accuracy %" },
+  billingExceptions: { value: 124, delta: -8.2, label: "Billing Exceptions" },
+};
+
+export const monthlyBillingTrend = months.map((m, i) => ({
+  month: m,
+  billed: int(38, 56) + i * 0.4,
+  exceptions: int(40, 180),
+}));
+
+export const billsGeneratedByMonth = months.map((m) => ({
+  month: m,
+  bills: int(7400, 8400),
+}));
+
+export const billingExceptionAnalysis = [
+  { type: "Missing Reading", count: 42 },
+  { type: "Negative Consumption", count: 18 },
+  { type: "Tariff Mismatch", count: 22 },
+  { type: "Zero Consumption", count: 14 },
+  { type: "Estimation Override", count: 16 },
+  { type: "Validation Failure", count: 12 },
+];
+
+export const consumptionKpis = {
+  total: { value: 28_45_120, delta: 4.2, label: "Total Consumption (KL)" },
+  average: { value: 18.4, delta: 0.6, label: "Avg Consumption / Consumer (KL)" },
+  highConsumers: { value: 264, delta: 3.1, label: "High Consumption Consumers" },
+  zeroConsumers: { value: 142, delta: -1.4, label: "Zero Consumption Consumers" },
+};
+
+export const consumptionByCategory = [
+  { name: "Residential", value: 1_82_400, color: "var(--color-chart-1, oklch(0.42 0.16 258))" },
+  { name: "Commercial", value: 62_180, color: "var(--color-chart-2, oklch(0.62 0.16 215))" },
+  { name: "Industrial", value: 28_640, color: "var(--color-chart-3, oklch(0.62 0.14 155))" },
+  { name: "Bulk", value: 18_420, color: "var(--color-chart-4, oklch(0.72 0.16 75))" },
+  { name: "Common Area", value: 12_780, color: "var(--color-chart-6, oklch(0.55 0.18 295))" },
+];
+
+export const topConsumersByUsage = customers.slice(0, 30).map((c, i) => ({
+  id: c.id,
+  name: c.name,
+  township: townships.find((t) => t.id === c.townshipId)?.name ?? "",
+  flat: c.flat,
+  category: (pick(["Residential", "Residential", "Commercial", "Bulk", "Industrial"]) as ConsumerCategory),
+  consumption: int(120, 480) - i * 2,
+  amount: int(8_000, 42_000),
+})).sort((a, b) => b.consumption - a.consumption);
+
+export const highConsumptionConsumers = topConsumersByUsage.slice(0, 12);
+
+export const zeroConsumptionConsumers = customers.slice(80, 92).map((c) => ({
+  id: c.id,
+  name: c.name,
+  township: townships.find((t) => t.id === c.townshipId)?.name ?? "",
+  flat: c.flat,
+  lastReadingDate: `2025-${String(int(8, 10)).padStart(2, "0")}-${String(int(1, 28)).padStart(2, "0")}`,
+  daysIdle: int(35, 120),
+}));
